@@ -4,14 +4,18 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
 const {
-  title = "Rosewood Living",
-  description = "Affordable and community housing management and advisory for property developers.",
+  title = "Rosewood Living — Community & Affordable Housing Advisory",
+  description = "Rosewood Living sets the benchmark in community and affordable housing management and advisory — partnering with property developers to unlock affordable-housing advantages and manage them for the long term.",
+  image = "/og.png",
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+const site = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL(image, site).href;
 ---
 
 <!doctype html>
@@ -21,18 +25,48 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#f3ecdf" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rosewood Living" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <slot name="head" />
   </head>
   <body>
     <slot />
+
+    <script>
+      // Scroll reveal — adds .is-visible once, GPU-only transitions in CSS.
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+      if (reduce || !("IntersectionObserver" in window)) {
+        els.forEach((el) => el.classList.add("is-visible"));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
   </body>
 </html>

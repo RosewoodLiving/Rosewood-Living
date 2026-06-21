@@ -1,42 +1,385 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import EnquiryForm from "../components/forms/EnquiryForm.tsx";
 
-const stack = [
-  "Astro",
-  "React islands",
-  "Tailwind v4",
-  "Cloudflare Workers",
-  "Supabase",
-  "Resend",
+import heroImg from "../assets/images/hero.png";
+import planningImg from "../assets/images/planning-stage.png";
+import svcManagement from "../assets/images/service-management.png";
+import svcPlanning from "../assets/images/service-planning.png";
+import svcCommunity from "../assets/images/service-community.png";
+
+const proof = [
+  { k: "Tier 3", v: "Community Housing Provider model" },
+  { k: "~30%", v: "Floor-space uplift unlocked" },
+  { k: "15 yrs", v: "Long-term management horizon" },
+  { k: "NSW", v: "Specialist, statewide coverage" },
+];
+
+const services = [
+  {
+    n: "01",
+    title: "Tailored Management Services",
+    image: svcManagement,
+    alt: "Refined, professionally managed residential lobby and resident lounge",
+    body: "End-to-end management of the affordable and community component — built around residents and the long-term performance of your asset.",
+    points: [
+      "Tenant selection, sustainment & community wellbeing",
+      "Building management & maintenance",
+      "Access control & security",
+      "Fire & regulatory compliance",
+    ],
+  },
+  {
+    n: "02",
+    title: "Planning & Development",
+    image: svcPlanning,
+    alt: "Architect's table with a scale model of a residential development and material samples",
+    body: "Advisory from feasibility through approval — structuring the affordable housing offer so it strengthens both the scheme and the numbers.",
+    points: [
+      "Feasibility & affordable-housing strategy",
+      "Scheme optimisation for the uplift",
+      "Planning pathway & SEPP guidance",
+      "Stakeholder & authority engagement",
+    ],
+  },
+  {
+    n: "03",
+    title: "Community Housing Advisory",
+    image: svcCommunity,
+    alt: "Rooftop communal garden terrace of a residential community at golden hour",
+    body: "Specialist counsel on community and affordable housing — from eligibility and compliance to designing places people are proud to call home.",
+    points: [
+      "Affordable & community housing eligibility",
+      "Compliance & registration support",
+      "Resident & community outcomes",
+      "Ongoing reporting & assurance",
+    ],
+  },
+];
+
+const why = [
+  {
+    title: "Specialists, not generalists",
+    body: "Community and affordable housing is all we do — so the advice you get is sharper, and the management is built for it.",
+  },
+  {
+    title: "Aligned for the long term",
+    body: "A ~15-year management horizon means our interests sit with the lasting performance of your asset and its residents.",
+  },
+  {
+    title: "Advisory & management, together",
+    body: "The team that advises on the scheme is the team that runs it — no hand-offs, no gaps between intent and delivery.",
+  },
+  {
+    title: "Built around residents",
+    body: "Well-run, dignified homes protect value and reputation. We manage places people are genuinely proud to live in.",
+  },
 ];
 ---
 
-<Base title="Rosewood Living — Affordable & Community Housing Advisory">
-  <main class="min-h-screen flex items-center justify-center px-6 py-section">
-    <div class="w-full max-w-content text-center">
-      <p class="text-sm uppercase tracking-[0.25em] text-muted mb-6">
-        Foundation ready
-      </p>
+<Base>
+  <Nav />
 
-      <h1 class="font-display text-display text-ink mb-6">Rosewood Living</h1>
-
-      <p class="font-sans text-lead text-ink-soft max-w-2xl mx-auto">
-        Affordable and community housing management and advisory for property
-        developers. The stack is wired up &mdash; design system, pages, and the
-        enquiry pipeline come next.
-      </p>
-
-      <div
-        class="mt-12 inline-flex flex-wrap items-center justify-center gap-3 text-sm text-muted"
-      >
-        {
-          stack.map((item) => (
-            <span class="rounded-full border border-line bg-surface px-4 py-2">
-              {item}
-            </span>
-          ))
-        }
+  <main>
+    <!-- HERO -->
+    <section class="relative isolate flex min-h-[100dvh] flex-col justify-end overflow-hidden">
+      <div class="absolute inset-0 -z-10">
+        <Image
+          src={heroImg}
+          alt=""
+          widths={[768, 1280, 1920]}
+          sizes="100vw"
+          loading="eager"
+          fetchpriority="high"
+          class="h-full w-full object-cover"
+        />
+        <video
+          class="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster={heroImg.src}
+          aria-hidden="true"
+        >
+          <source src="/media/hero.mp4" type="video/mp4" />
+        </video>
+        <div
+          class="absolute inset-0"
+          style="background: linear-gradient(180deg, rgba(36,27,20,0.34) 0%, rgba(36,27,20,0.05) 32%, rgba(36,27,20,0.45) 72%, rgba(36,27,20,0.78) 100%);"
+        >
+        </div>
       </div>
-    </div>
+
+      <div class="u-container pb-[clamp(3.5rem,8vh,7rem)] pt-40">
+        <div class="max-w-3xl" data-reveal>
+          <span
+            class="inline-flex items-center gap-2.5 text-[0.72rem] font-medium uppercase tracking-[0.24em]"
+            style="color:#e7d3ad"
+          >
+            <span class="inline-block h-px w-7" style="background:#e7d3ad;opacity:.7"></span>
+            Community &amp; Affordable Housing
+          </span>
+          <h1
+            class="mt-6 font-display text-display leading-[1.02]"
+            style="color:#fbf6ec; text-wrap:balance"
+          >
+            The benchmark in community &amp; affordable housing.
+          </h1>
+          <p
+            class="mt-6 max-w-xl text-lead"
+            style="color:rgba(251,246,236,0.86)"
+          >
+            We partner with property developers to unlock the advantages of affordable
+            housing — and manage them, beautifully, for the long term.
+          </p>
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <a href="/letter-of-intent" class="btn btn-on-dark">
+              Ready for your project?
+              <span class="btn__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </span>
+            </a>
+            <a
+              href="#approach"
+              class="btn"
+              style="color:#fbf6ec;border:1px solid rgba(251,246,236,0.35)"
+            >
+              Explore our approach
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POSITIONING / APPROACH -->
+    <section id="approach" class="py-section">
+      <div class="u-container">
+        <div class="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-end">
+          <div data-reveal>
+            <span class="eyebrow">Our approach</span>
+            <h2 class="mt-5 text-h1" style="text-wrap:balance">
+              We set the benchmark — then we hold it.
+            </h2>
+          </div>
+          <p class="text-ink-soft lg:pb-2" data-reveal style="--reveal-delay:120ms">
+            Affordable housing is no longer a constraint to design around — it is an
+            advantage to design <em>with</em>. Rosewood Living helps developers turn the
+            affordable component into additional yield, a smoother planning path, and an
+            asset that performs for decades.
+          </p>
+        </div>
+
+        <div class="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-4" data-reveal>
+          {
+            proof.map((p) => (
+              <div class="bg-canvas p-7">
+                <div class="font-display text-[2.4rem] leading-none text-rosewood">{p.k}</div>
+                <p class="mt-3 text-[0.92rem] text-ink-soft">{p.v}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-section" style="background:var(--color-surface-2)">
+      <div class="u-container">
+        <div class="max-w-2xl" data-reveal>
+          <span class="eyebrow">What we do</span>
+          <h2 class="mt-5 text-h1">Three disciplines, one partner.</h2>
+          <p class="mt-5 text-ink-soft">
+            From the first feasibility line to the thousandth day of management, your
+            affordable housing is in one specialist set of hands.
+          </p>
+        </div>
+
+        <div class="mt-16 flex flex-col gap-16 lg:gap-24">
+          {
+            services.map((s, i) => (
+              <article
+                class:list={[
+                  "grid items-center gap-8 lg:grid-cols-2 lg:gap-16",
+                  i % 2 === 1 && "lg:[&>figure]:order-2",
+                ]}
+                data-reveal
+              >
+                <figure class="group overflow-hidden rounded-3xl border border-line bg-canvas p-2 shadow-card">
+                  <div class="overflow-hidden rounded-[1.7rem]">
+                    <Image
+                      src={s.image}
+                      alt={s.alt}
+                      widths={[480, 800, 1100]}
+                      sizes="(min-width: 1024px) 36rem, 92vw"
+                      class="aspect-[16/11] w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                    />
+                  </div>
+                </figure>
+
+                <div>
+                  <div class="flex items-baseline gap-4">
+                    <span class="font-display text-[1.1rem] text-gold">{s.n}</span>
+                    <span class="hr-line flex-1"></span>
+                  </div>
+                  <h3 class="mt-5 text-h2">{s.title}</h3>
+                  <p class="mt-4 text-ink-soft">{s.body}</p>
+                  <ul class="mt-6 grid gap-2.5 sm:grid-cols-2">
+                    {s.points.map((pt) => (
+                      <li class="flex items-start gap-2.5 text-[0.95rem] text-ink-soft">
+                        <svg
+                          class="mt-[0.35rem] shrink-0 text-sage"
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        {pt}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- PLANNING STAGE + GENERAL ENQUIRY -->
+    <section id="planning" class="py-section">
+      <div class="u-container">
+        <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <div data-reveal>
+            <span class="eyebrow">Planning advisory</span>
+            <h2 class="mt-5 text-h1" style="text-wrap:balance">
+              Still in the planning stage?
+            </h2>
+            <p class="mt-5 text-ink-soft">
+              Whether you have a site under contract or you&rsquo;re simply exploring the
+              upside, the earlier we&rsquo;re involved, the more we can unlock. We&rsquo;ll
+              show you where the affordable-housing uplift fits — often around an additional
+              30% — and how to design a scheme that captures it.
+            </p>
+            <ul class="mt-7 space-y-3">
+              {
+                [
+                  "A clear read on your site's affordable-housing potential",
+                  "Scheme & yield optimisation before you commit",
+                  "A planning pathway that authorities respond to",
+                ].map((pt) => (
+                  <li class="flex items-start gap-3 text-ink-soft">
+                    <svg
+                      class="mt-1 shrink-0 text-rosewood"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                    >
+                      <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    {pt}
+                  </li>
+                ))
+              }
+            </ul>
+            <div class="mt-8 overflow-hidden rounded-3xl border border-line bg-surface p-2 shadow-card">
+              <Image
+                src={planningImg}
+                alt="Sunlit landscaped laneway between a premium low-rise residential community at golden hour"
+                widths={[480, 800, 1100]}
+                sizes="(min-width: 1024px) 34rem, 92vw"
+                class="aspect-[16/10] w-full rounded-[1.7rem] object-cover"
+              />
+            </div>
+          </div>
+
+          <div data-reveal style="--reveal-delay:120ms">
+            <div class="rounded-3xl border border-line bg-surface p-7 shadow-card sm:p-9">
+              <h3 class="text-h3">Tell us about your project</h3>
+              <p class="mt-2 mb-6 text-[0.95rem] text-ink-soft">
+                A short note is all we need to point you in the right direction. No
+                obligation.
+              </p>
+              <EnquiryForm client:visible />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY ROSEWOOD -->
+    <section id="why" class="py-section" style="background:var(--color-surface-2)">
+      <div class="u-container">
+        <div class="max-w-2xl" data-reveal>
+          <span class="eyebrow">Why Rosewood</span>
+          <h2 class="mt-5 text-h1">Why developers choose us.</h2>
+        </div>
+        <div class="mt-14 grid gap-5 sm:grid-cols-2">
+          {
+            why.map((w, i) => (
+              <div
+                class="rounded-3xl border border-line bg-canvas p-8 transition-shadow duration-500 hover:shadow-card"
+                data-reveal
+                style={`--reveal-delay:${i * 90}ms`}
+              >
+                <div class="mb-4 h-9 w-9 rounded-full" style="background:rgba(122,68,52,0.1)">
+                  <div class="grid h-full w-full place-items-center font-display text-rosewood">
+                    {String(i + 1)}
+                  </div>
+                </div>
+                <h3 class="text-h3">{w.title}</h3>
+                <p class="mt-3 text-[0.96rem] text-ink-soft">{w.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING CTA -->
+    <section class="py-section" style="background:var(--color-rosewood-ink); color:#fbf6ec">
+      <div class="u-container">
+        <div class="mx-auto max-w-3xl text-center" data-reveal>
+          <span
+            class="eyebrow eyebrow--center"
+            style="color:#e7d3ad; justify-content:center"
+          >
+            Ready when you are
+          </span>
+          <h2 class="mt-5 font-display text-display" style="color:#fbf6ec; text-wrap:balance">
+            Ready for your project?
+          </h2>
+          <p class="mx-auto mt-6 max-w-xl text-lead" style="color:rgba(251,246,236,0.82)">
+            Request a personalised Letter of Intent and start building with the full
+            advantages of affordable housing behind you.
+          </p>
+          <div class="mt-9 flex justify-center">
+            <a href="/letter-of-intent" class="btn btn-on-dark">
+              Get your Letter of Intent
+              <span class="btn__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <Footer />
 </Base>

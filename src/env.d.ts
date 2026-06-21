@@ -14,4 +14,7 @@ interface Env {
   RESEND_API_KEY: string;
   TURNSTILE_SECRET_KEY: string;
   PUBLIC_TURNSTILE_SITE_KEY: string;
+  // Optional email routing (fall back to sensible defaults when unset).
+  EMAIL_FROM?: string;
+  LEADS_NOTIFY_TO?: string;
 }

@@ -1,0 +1,97 @@
+---
+import Wordmark from "./Wordmark.astro";
+
+const year = new Date().getFullYear();
+
+const explore = [
+  { label: "Approach", href: "/#approach" },
+  { label: "Services", href: "/#services" },
+  { label: "Planning advisory", href: "/#planning" },
+  { label: "Why Rosewood", href: "/#why" },
+  { label: "Letter of Intent", href: "/letter-of-intent" },
+];
+---
+
+<footer style="background: var(--color-rosewood-ink); color: #ece3d4;">
+  <div class="u-container py-[clamp(4rem,7vw,6rem)]">
+    <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div class="max-w-sm">
+        <Wordmark tone="light" />
+        <p class="mt-5 text-[0.98rem] leading-relaxed" style="color: rgba(236,227,212,0.72)">
+          Setting the benchmark in community and affordable housing — advisory and
+          long-term management built around the people who live there.
+        </p>
+        <a
+          href="/letter-of-intent"
+          class="btn btn-on-dark mt-7 !py-2.5 !pl-5 !text-[0.9rem]"
+        >
+          Start a Letter of Intent
+          <span class="btn__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+      <nav aria-label="Explore">
+        <h3 class="text-xs font-medium uppercase tracking-[0.22em]" style="color: rgba(236,227,212,0.5)">
+          Explore
+        </h3>
+        <ul class="mt-5 space-y-3 text-[0.95rem]">
+          {
+            explore.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  class="transition-colors duration-300 hover:text-white"
+                  style="color: rgba(236,227,212,0.82)"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div>
+        <h3 class="text-xs font-medium uppercase tracking-[0.22em]" style="color: rgba(236,227,212,0.5)">
+          Contact
+        </h3>
+        <ul class="mt-5 space-y-3 text-[0.95rem]" style="color: rgba(236,227,212,0.82)">
+          <li>
+            <a href="mailto:hello@rosewoodliving.com.au" class="hover:text-white">
+              hello@rosewoodliving.com.au
+            </a>
+          </li>
+          <li>Sydney, New South Wales</li>
+          <li>Australia</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-medium uppercase tracking-[0.22em]" style="color: rgba(236,227,212,0.5)">
+          Practice
+        </h3>
+        <ul class="mt-5 space-y-3 text-[0.95rem]" style="color: rgba(236,227,212,0.82)">
+          <li>Community &amp; affordable housing</li>
+          <li>Management &amp; advisory</li>
+          <li>NSW &amp; national</li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="mt-14 flex flex-col gap-3 border-t pt-6 text-[0.82rem] sm:flex-row sm:items-center sm:justify-between"
+      style="border-color: rgba(236,227,212,0.14); color: rgba(236,227,212,0.55)"
+    >
+      <p>© {year} Rosewood Living. All rights reserved.</p>
+      <p class="flex flex-wrap gap-x-5 gap-y-1">
+        <span>ABN 00 000 000 000</span>
+        <a href="#" class="hover:text-white">Privacy</a>
+        <a href="#" class="hover:text-white">Terms</a>
+      </p>
+    </div>
+  </div>
+</footer>

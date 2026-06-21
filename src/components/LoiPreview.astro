@@ -1,0 +1,76 @@
+---
+// Decorative Letter of Intent mockup.
+// Letterhead, subject line and signature are kept crisp for credibility;
+// the body is rendered as soft, blurred filler so no real wording is shown.
+interface Props { class?: string }
+const { class: className = "" } = Astro.props;
+
+// width % per line; 0 marks a paragraph break
+const body = [98, 94, 100, 90, 0, 96, 88, 99, 92, 84, 0, 95, 70];
+---
+
+<div
+  class:list={[
+    "loi-paper w-[clamp(20rem,34rem,90vw)] rounded-[0.4rem] bg-[#fdfaf3] p-9 sm:p-11",
+    className,
+  ]}
+  style="box-shadow: 0 2px 6px rgba(36,27,20,0.06), 0 40px 80px -40px rgba(36,27,20,0.5); aspect-ratio: 1 / 1.414;"
+  aria-hidden="true"
+>
+  <!-- Letterhead (crisp) -->
+  <div class="flex items-start justify-between">
+    <div>
+      <div class="font-display text-[1.05rem] tracking-[0.02em] text-rosewood" style="font-weight:560">
+        ROSEWOOD LIVING
+      </div>
+      <div class="mt-1 text-[0.5rem] uppercase tracking-[0.18em] text-muted">
+        Community &amp; Affordable Housing
+      </div>
+    </div>
+    <div class="text-right text-[0.5rem] tracking-[0.14em] text-muted">Ref RL-2026</div>
+  </div>
+  <div class="mt-4 h-px w-full" style="background:var(--color-line-strong)"></div>
+
+  <!-- Date + recipient (soft) -->
+  <div class="mt-6 space-y-1.5">
+    <div class="h-1.5 w-20 rounded-full bg-ink/15"></div>
+    <div class="h-1.5 w-32 rounded-full bg-ink/15"></div>
+    <div class="h-1.5 w-24 rounded-full bg-ink/15"></div>
+  </div>
+
+  <!-- Subject (crisp) -->
+  <div class="mt-6 font-display text-[0.82rem] leading-snug text-ink" style="font-weight:540">
+    Re: Letter of Intent — Affordable Housing
+    <br />Uplift &amp; Long-Term Management
+  </div>
+
+  <!-- Body (obscured) -->
+  <div class="mt-5 space-y-[7px]" style="filter: blur(0.8px)">
+    {
+      body.map((w) =>
+        w === 0 ? (
+          <div class="h-2"></div>
+        ) : (
+          <div class="h-[6px] rounded-full bg-ink/12" style={`width:${w}%`}></div>
+        ),
+      )
+    }
+  </div>
+
+  <!-- Signature (crisp) -->
+  <div class="mt-7">
+    <svg width="118" height="34" viewBox="0 0 118 34" fill="none" aria-hidden="true">
+      <path
+        d="M3 24c8-14 12 6 18-2s6-16 11-9 2 18 9 12 8-20 14-15 1 16 8 13 9-14 15-12 12 8 20 3"
+        stroke="#4f2a20"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        opacity="0.85"
+      ></path>
+    </svg>
+    <div class="mt-1 font-display text-[0.78rem] text-ink" style="font-weight:540">
+      Rosewood Living
+    </div>
+    <div class="text-[0.55rem] uppercase tracking-[0.16em] text-muted">Licensee-in-Charge</div>
+  </div>
+</div>

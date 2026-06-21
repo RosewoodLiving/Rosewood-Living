@@ -1,53 +1,65 @@
 @import "tailwindcss";
 
-/* Self-hosted variable fonts (swap freely once brand direction is locked). */
+/* Self-hosted variable fonts.
+ * Fraunces  — editorial display serif (optical sizing, soft contrast).
+ * Geist     — refined neutral grotesk for UI/body. */
 @import "@fontsource-variable/fraunces";
-@import "@fontsource-variable/inter";
+@import "@fontsource-variable/geist";
 
 /*
  * Rosewood Living — design tokens
- * Warm, editorial, premium. Tuned for a B2B housing-advisory brand.
- * These are the single source of truth; pages/components consume them via
- * Tailwind utilities (bg-canvas, text-ink, font-display, etc.).
+ * Editorial-luxury system for a B2B community & affordable housing brand.
+ * Palette is art-directed from the brand imagery: warm ivory/bone, espresso
+ * shadow, a deep rosewood-brick primary, clay + sage secondaries, brass hairline.
+ * Single source of truth — consumed via Tailwind utilities (bg-canvas, text-ink…).
  */
 @theme {
-  /* Palette — warm rosewood + ivory, with a muted sage accent */
-  --color-canvas: #f7f2ea;
-  --color-surface: #fffdf9;
-  --color-ink: #2b1d16;
-  --color-ink-soft: #5c4a3f;
-  --color-muted: #8a7a6d;
-  --color-line: #e6dccd;
+  /* Neutrals — warm paper world */
+  --color-canvas: #f3ecdf;
+  --color-surface: #fbf6ec;
+  --color-surface-2: #ede3d2;
+  --color-ink: #241b14;
+  --color-ink-soft: #57473a;
+  --color-muted: #8b7a66;
+  --color-line: #e3d8c5;
+  --color-line-strong: #d6c8b1;
 
-  --color-rosewood: #6b3a2e;
-  --color-rosewood-deep: #4a2620;
-  --color-clay: #b06a4f;
-  --color-sage: #6f7a5a;
-  --color-gold: #b8915a;
+  /* Brand — rosewood + warm accents */
+  --color-rosewood: #7a4434;
+  --color-rosewood-deep: #4f2a20;
+  --color-rosewood-ink: #371d16;
+  --color-clay: #a9663f;
+  --color-sage: #5e6a4c;
+  --color-gold: #b08a52;
 
   /* Typography */
   --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  /* Fluid type scale (clamp-based, mobile -> desktop) */
-  --text-display: clamp(2.75rem, 6vw, 5.5rem);
-  --text-h1: clamp(2.25rem, 4.5vw, 3.75rem);
-  --text-h2: clamp(1.75rem, 3vw, 2.5rem);
-  --text-h3: clamp(1.35rem, 2vw, 1.75rem);
-  --text-lead: clamp(1.125rem, 1.6vw, 1.375rem);
+  /* Fluid type scale (clamp-based, mobile → desktop) */
+  --text-display: clamp(2.85rem, 6.5vw, 6rem);
+  --text-h1: clamp(2.25rem, 4.6vw, 3.85rem);
+  --text-h2: clamp(1.85rem, 3.2vw, 2.75rem);
+  --text-h3: clamp(1.3rem, 2vw, 1.7rem);
+  --text-lead: clamp(1.125rem, 1.55vw, 1.4rem);
 
-  /* Spacing rhythm for generous, editorial sections */
-  --spacing-section: clamp(4rem, 9vw, 8rem);
+  /* Spacing rhythm — generous, editorial */
+  --spacing-section: clamp(5rem, 10vw, 9.5rem);
 
   /* Soft, premium elevation (no harsh shadows) */
-  --shadow-card: 0 1px 2px rgba(43, 29, 22, 0.04),
-    0 12px 32px -12px rgba(43, 29, 22, 0.18);
+  --shadow-card: 0 1px 2px rgba(36, 27, 20, 0.04),
+    0 18px 48px -22px rgba(36, 27, 20, 0.28);
+  --shadow-float: 0 2px 6px rgba(36, 27, 20, 0.06),
+    0 26px 60px -28px rgba(36, 27, 20, 0.4);
 
-  --radius-xl: 1.25rem;
-  --radius-2xl: 1.75rem;
+  --radius-lg: 0.9rem;
+  --radius-xl: 1.35rem;
+  --radius-2xl: 1.9rem;
+  --radius-3xl: 2.4rem;
 
-  /* Container width -> generates `max-w-content` */
-  --container-content: 72rem;
+  --container-content: 75rem;
+
+  --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
@@ -67,14 +79,19 @@
     font-family: var(--font-sans);
     font-size: 1rem;
     line-height: 1.65;
+    font-feature-settings: "ss01", "cv01";
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
-    font-weight: 460;
-    line-height: 1.08;
-    letter-spacing: -0.015em;
+    font-weight: 420;
+    line-height: 1.04;
+    letter-spacing: -0.018em;
     color: var(--color-ink);
+    font-optical-sizing: auto;
   }
 
   ::selection {
@@ -82,15 +99,183 @@
     color: var(--color-surface);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.001ms !important;
-      transition-duration: 0.001ms !important;
-    }
+  :focus-visible {
+    outline: 2px solid var(--color-rosewood);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* Centered content rail */
+  .u-container {
+    width: 100%;
+    max-width: var(--container-content);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  }
+
+  /* Micro eyebrow label */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: var(--color-rosewood);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.6rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+  .eyebrow--center::before {
+    display: none;
+  }
+
+  /* Buttons — pill, button-in-button trailing icon */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    border-radius: 999px;
+    padding: 0.95rem 1.1rem 0.95rem 1.6rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.5s var(--ease-lux), background-color 0.5s var(--ease-lux),
+      color 0.5s var(--ease-lux), box-shadow 0.5s var(--ease-lux),
+      border-color 0.5s var(--ease-lux);
+    border: 1px solid transparent;
+    will-change: transform;
+  }
+  .btn:active {
+    transform: scale(0.985);
+  }
+  .btn__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    transition: transform 0.5s var(--ease-lux), background-color 0.5s var(--ease-lux);
+  }
+  .btn__icon svg {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+  .btn:hover .btn__icon {
+    transform: translate(2px, -1px);
+  }
+
+  .btn-primary {
+    background: var(--color-rosewood);
+    color: #fbf6ec;
+    box-shadow: 0 14px 30px -16px rgba(79, 42, 32, 0.7);
+  }
+  .btn-primary .btn__icon {
+    background: rgba(251, 246, 236, 0.16);
+  }
+  .btn-primary:hover {
+    background: var(--color-rosewood-deep);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-line-strong);
+  }
+  .btn-ghost .btn__icon {
+    background: rgba(36, 27, 20, 0.06);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-ink);
+  }
+
+  .btn-on-dark {
+    background: #fbf6ec;
+    color: var(--color-rosewood-ink);
+  }
+  .btn-on-dark .btn__icon {
+    background: rgba(55, 29, 22, 0.12);
+  }
+  .btn-on-dark:hover {
+    background: #fff;
+  }
+
+  .btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: var(--color-rosewood);
+    border-bottom: 1px solid transparent;
+    transition: gap 0.4s var(--ease-lux), border-color 0.4s var(--ease-lux);
+  }
+  .btn-link svg {
+    width: 0.9rem;
+    height: 0.9rem;
+    transition: transform 0.4s var(--ease-lux);
+  }
+  .btn-link:hover {
+    gap: 0.75rem;
+    border-color: currentColor;
+  }
+  .btn-link:hover svg {
+    transform: translateX(2px);
+  }
+
+  /* Hairline rule */
+  .hr-line {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--color-line-strong),
+      transparent
+    );
+    border: 0;
+  }
+}
+
+/* Scroll-reveal — GPU-only (opacity + transform), graceful + staggered */
+@layer utilities {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.95s var(--ease-lux), transform 0.95s var(--ease-lux);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  [data-reveal="fade"] {
+    transform: none;
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
   }
 }
