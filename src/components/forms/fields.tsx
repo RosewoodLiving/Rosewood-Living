@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 const base =
-  "w-full rounded-xl border border-line bg-surface px-4 py-3 text-[0.98rem] text-ink placeholder:text-muted/70 transition-colors duration-300 focus:border-rosewood focus:outline-none focus:ring-2 focus:ring-rosewood/25";
+  "w-full rounded-[2px] border border-line bg-surface px-4 py-3.5 text-[0.95rem] text-ink placeholder:text-muted/70 transition-colors duration-300 focus:border-ink focus:outline-none";
 
 export function Field({
   label,
@@ -22,7 +22,7 @@ export function Field({
     <div className={className}>
       <label
         htmlFor={htmlFor}
-        className="mb-1.5 flex items-baseline justify-between text-[0.82rem] font-medium text-ink-soft"
+        className="mb-2 flex items-baseline justify-between text-[0.68rem] font-medium uppercase tracking-[0.14em] text-ink-soft"
       >
         <span>
           {label}
@@ -104,7 +104,7 @@ export function SubmitButton({
 export function ErrorNote({ message }: { message: string }) {
   if (!message) return null;
   return (
-    <p className="rounded-lg bg-rosewood/8 px-4 py-3 text-[0.85rem] text-rosewood-deep">
+    <p className="rounded-[2px] border border-rosewood/25 bg-rosewood/8 px-4 py-3 text-[0.85rem] text-rosewood-deep">
       {message}
     </p>
   );

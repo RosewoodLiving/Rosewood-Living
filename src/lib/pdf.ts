@@ -1,5 +1,6 @@
 import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from "pdf-lib";
 import type { LoiInput } from "./schemas";
+import { CREST_PNG_BASE64, CREST_PNG_WIDTH, CREST_PNG_HEIGHT } from "./crest-logo";
 
 const ROSEWOOD = rgb(0.478, 0.267, 0.204); // #7a4434
 const INK = rgb(0.141, 0.106, 0.078); // #241b14
@@ -11,6 +12,13 @@ const PAGE_W = 595.28;
 const PAGE_H = 841.89;
 const MARGIN = 64;
 const MAX_W = PAGE_W - MARGIN * 2;
+
+function base64ToUint8(b64: string): Uint8Array {
+  const bin = atob(b64);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
 
 function formatDate(d: Date): string {
   return d.toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric" });
@@ -73,18 +81,29 @@ export async function generateLoiPdf(
 
   const cursor: Cursor = { y: PAGE_H - MARGIN };
 
-  // Letterhead
-  page.drawText("ROSEWOOD LIVING", {
+  // Letterhead — crest medallion + wordmark
+  const crest = await doc.embedPng(base64ToUint8(CREST_PNG_BASE64));
+  const crestH = 46;
+  const crestW = crestH * (CREST_PNG_WIDTH / CREST_PNG_HEIGHT);
+  const headTop = PAGE_H - MARGIN;
+  page.drawImage(crest, {
     x: MARGIN,
-    y: cursor.y,
-    size: 20,
+    y: headTop - crestH,
+    width: crestW,
+    height: crestH,
+  });
+
+  const textX = MARGIN + crestW + 14;
+  page.drawText("ROSEWOOD LIVING", {
+    x: textX,
+    y: headTop - 21,
+    size: 18,
     font: serifBold,
     color: ROSEWOOD,
   });
-  cursor.y -= 16;
   page.drawText("Community & Affordable Housing — Management & Advisory", {
-    x: MARGIN,
-    y: cursor.y,
+    x: textX,
+    y: headTop - 36,
     size: 9.5,
     font: sans,
     color: INK_SOFT,
@@ -94,13 +113,13 @@ export async function generateLoiPdf(
   const ref = reference(data.company, now);
   page.drawText(`Ref ${ref}`, {
     x: PAGE_W - MARGIN - sans.widthOfTextAtSize(`Ref ${ref}`, 9.5),
-    y: PAGE_H - MARGIN,
+    y: headTop - 9,
     size: 9.5,
     font: sans,
     color: INK_SOFT,
   });
 
-  cursor.y -= 22;
+  cursor.y = headTop - crestH - 16;
   page.drawLine({
     start: { x: MARGIN, y: cursor.y },
     end: { x: PAGE_W - MARGIN, y: cursor.y },
@@ -168,7 +187,7 @@ export async function generateLoiPdf(
     color: LINE,
   });
   page.drawText(
-    "Rosewood Living  ·  Sydney, NSW, Australia  ·  hello@rosewoodliving.com.au  ·  ABN 00 000 000 000",
+    "Rosewood Living  ·  238 Victoria Rd, Gladesville NSW 2111  ·  info@rosewoodliving.com.au  ·  ABN 00 000 000 000",
     { x: MARGIN, y: MARGIN + 8, size: 8, font: sans, color: INK_SOFT },
   );
 

@@ -9,97 +9,87 @@ const links = [
 ];
 ---
 
-<header class="pointer-events-none fixed inset-x-0 top-0 z-50">
-  <div class="u-container">
-    <nav
-      id="nav"
-      class="pointer-events-auto mx-auto mt-4 flex w-full max-w-[64rem] items-center justify-between gap-4 rounded-full border border-line/70 bg-surface/70 px-3 py-2.5 pl-5 backdrop-blur-xl transition-[box-shadow,background-color] duration-500 sm:mt-6"
-      data-nav
-    >
+<header class="fixed inset-x-0 top-0 z-50">
+  <div
+    id="nav"
+    data-nav
+    class="text-[#f4efe6] transition-[background-color,color,border-color,backdrop-filter] duration-500"
+    style="border-bottom:1px solid transparent"
+  >
+    <div class="u-container flex h-[4.6rem] items-center justify-between gap-6">
       <Wordmark />
 
-      <ul class="hidden items-center gap-1 md:flex">
+      <nav class="hidden items-center gap-9 md:flex">
         {
           links.map((l) => (
-            <li>
-              <a
-                href={l.href}
-                class="rounded-full px-3.5 py-2 text-sm text-ink-soft transition-colors duration-300 hover:bg-ink/[0.05] hover:text-ink"
-              >
-                {l.label}
-              </a>
-            </li>
+            <a
+              href={l.href}
+              class="text-[0.72rem] uppercase tracking-[0.16em] opacity-80 transition-opacity duration-300 hover:opacity-100"
+            >
+              {l.label}
+            </a>
           ))
         }
-      </ul>
-
-      <div class="flex items-center gap-2">
-        <a href="/letter-of-intent" class="btn btn-primary hidden sm:inline-flex !py-2.5 !pl-5 !text-[0.9rem]">
+        <a href="/letter-of-intent" class="btn-link">
           Letter of Intent
-          <span class="btn__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-          </span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
         </a>
+      </nav>
 
-        <button
-          type="button"
-          class="grid h-10 w-10 place-items-center rounded-full border border-line/70 text-ink md:hidden"
-          aria-label="Open menu"
-          aria-expanded="false"
-          aria-controls="mobile-menu"
-          data-menu-toggle
-        >
-          <span class="relative block h-3 w-[18px]">
-            <span
-              class="absolute left-0 top-0 block h-[1.5px] w-[18px] bg-current transition-transform duration-500"
-              data-bar="top"></span>
-            <span
-              class="absolute left-0 bottom-0 block h-[1.5px] w-[18px] bg-current transition-transform duration-500"
-              data-bar="bottom"></span>
-          </span>
-        </button>
-      </div>
-    </nav>
+      <button
+        type="button"
+        class="grid h-10 w-10 place-items-center md:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
+        <span class="relative block h-3 w-[20px]">
+          <span class="absolute left-0 top-0 block h-px w-[20px] bg-current transition-transform duration-500" data-bar="top"></span>
+          <span class="absolute left-0 bottom-0 block h-px w-[20px] bg-current transition-transform duration-500" data-bar="bottom"></span>
+        </span>
+      </button>
+    </div>
   </div>
 </header>
 
 <!-- Mobile overlay -->
 <div
   id="mobile-menu"
-  class="pointer-events-none fixed inset-0 z-40 flex flex-col justify-center bg-canvas/95 px-7 opacity-0 backdrop-blur-2xl transition-opacity duration-500 md:hidden"
+  class="pointer-events-none fixed inset-0 z-40 flex flex-col justify-center bg-canvas px-7 opacity-0 transition-opacity duration-500 md:hidden"
   data-menu-panel
 >
-  <ul class="flex flex-col gap-3">
+  <nav class="flex flex-col gap-5">
     {
       links.map((l, i) => (
-        <li
-          class="translate-y-6 opacity-0 transition-all duration-500"
+        <a
+          href={l.href}
+          class="translate-y-5 font-display text-4xl text-ink opacity-0 transition-all duration-500"
           data-menu-item
+          data-menu-link
           style={`transition-delay:${90 + i * 70}ms`}
         >
-          <a href={l.href} class="font-display text-4xl text-ink" data-menu-link>
-            {l.label}
-          </a>
-        </li>
+          {l.label}
+        </a>
       ))
     }
-  </ul>
-  <a
-    href="/letter-of-intent"
-    class="btn btn-primary mt-10 w-max translate-y-6 opacity-0 transition-all duration-500"
-    data-menu-item
-    style="transition-delay:400ms"
-    data-menu-link
-  >
-    Get a Letter of Intent
-    <span class="btn__icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-        <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
-      </svg>
-    </span>
-  </a>
+    <a
+      href="/letter-of-intent"
+      class="btn btn-primary mt-6 w-max translate-y-5 opacity-0 transition-all duration-500"
+      data-menu-item
+      data-menu-link
+      style="transition-delay:400ms"
+    >
+      Letter of Intent
+      <span class="btn__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </span>
+    </a>
+  </nav>
 </div>
 
 <script>
@@ -110,11 +100,21 @@ const links = [
   const barTop = document.querySelector<HTMLElement>('[data-bar="top"]');
   const barBottom = document.querySelector<HTMLElement>('[data-bar="bottom"]');
 
-  // Subtle elevation once scrolled.
   const onScroll = () => {
     if (!nav) return;
-    nav.classList.toggle("shadow-float", window.scrollY > 12);
-    nav.classList.toggle("bg-surface/85", window.scrollY > 12);
+    const solid = window.scrollY > 24;
+    nav.classList.toggle("is-scrolled", solid);
+    if (solid) {
+      nav.style.background = "rgba(236,230,218,0.92)";
+      nav.style.backdropFilter = "blur(12px)";
+      nav.style.borderBottomColor = "var(--color-line)";
+      nav.style.color = "var(--color-ink)";
+    } else {
+      nav.style.background = "transparent";
+      nav.style.backdropFilter = "none";
+      nav.style.borderBottomColor = "transparent";
+      nav.style.color = "#f4efe6";
+    }
   };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
@@ -127,22 +127,24 @@ const links = [
     panel.classList.toggle("opacity-0", !open);
     toggle.setAttribute("aria-expanded", String(open));
     toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    nav?.classList.toggle("is-menu-open", open);
     document.body.style.overflow = open ? "hidden" : "";
-    // Morph hamburger → X
+    if (nav) {
+      if (open) nav.style.color = "var(--color-ink)";
+      else onScroll();
+    }
     if (barTop && barBottom) {
-      barTop.style.transform = open ? "translateY(5.5px) rotate(45deg)" : "";
-      barBottom.style.transform = open ? "translateY(-5.5px) rotate(-45deg)" : "";
+      barTop.style.transform = open ? "translateY(6px) rotate(45deg)" : "";
+      barBottom.style.transform = open ? "translateY(-5px) rotate(-45deg)" : "";
     }
     items.forEach((el) => {
       el.classList.toggle("opacity-0", !open);
-      el.classList.toggle("translate-y-6", !open);
+      el.classList.toggle("translate-y-5", !open);
     });
   };
 
   toggle?.addEventListener("click", () => setMenu(!open));
-  document
-    .querySelectorAll("[data-menu-link]")
-    .forEach((a) => a.addEventListener("click", () => setMenu(false)));
+  document.querySelectorAll("[data-menu-link]").forEach((a) => a.addEventListener("click", () => setMenu(false)));
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && open) setMenu(false);
   });

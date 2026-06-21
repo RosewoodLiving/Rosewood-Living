@@ -11,7 +11,7 @@ const body = [98, 94, 100, 90, 0, 96, 88, 99, 92, 84, 0, 95, 70];
 
 <div
   class:list={[
-    "loi-paper w-[clamp(20rem,34rem,90vw)] rounded-[0.4rem] bg-[#fdfaf3] p-9 sm:p-11",
+    "loi-paper w-[clamp(20rem,34rem,90vw)] rounded-[2px] bg-[#fdfaf3] p-9 sm:p-11",
     className,
   ]}
   style="box-shadow: 0 2px 6px rgba(36,27,20,0.06), 0 40px 80px -40px rgba(36,27,20,0.5); aspect-ratio: 1 / 1.414;"
@@ -19,12 +19,15 @@ const body = [98, 94, 100, 90, 0, 96, 88, 99, 92, 84, 0, 95, 70];
 >
   <!-- Letterhead (crisp) -->
   <div class="flex items-start justify-between">
-    <div>
-      <div class="font-display text-[1.05rem] tracking-[0.02em] text-rosewood" style="font-weight:560">
-        ROSEWOOD LIVING
-      </div>
-      <div class="mt-1 text-[0.5rem] uppercase tracking-[0.18em] text-muted">
-        Community &amp; Affordable Housing
+    <div class="flex items-center gap-2.5 text-rosewood">
+      <img src="/media/logos/crest-dark.png" alt="" aria-hidden="true" class="h-11 w-auto shrink-0" />
+      <div>
+        <div class="font-display text-[1rem] uppercase tracking-[0.16em]" style="font-weight:600">
+          Rosewood Living
+        </div>
+        <div class="mt-1 text-[0.5rem] uppercase tracking-[0.18em] text-muted">
+          Community &amp; Affordable Housing
+        </div>
       </div>
     </div>
     <div class="text-right text-[0.5rem] tracking-[0.14em] text-muted">Ref RL-2026</div>

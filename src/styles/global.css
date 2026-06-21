@@ -1,63 +1,62 @@
 @import "tailwindcss";
 
 /* Self-hosted variable fonts.
- * Fraunces  — editorial display serif (optical sizing, soft contrast).
- * Geist     — refined neutral grotesk for UI/body. */
-@import "@fontsource-variable/fraunces";
-@import "@fontsource-variable/geist";
+ * Bodoni Moda — sharp high-contrast Didone display (couture / luxury-marque).
+ * Jost        — geometric grotesk (Futura lineage) for UI, body and labels. */
+@import "@fontsource-variable/bodoni-moda";
+@import "@fontsource-variable/jost";
 
 /*
- * Rosewood Living — design tokens
- * Editorial-luxury system for a B2B community & affordable housing brand.
- * Palette is art-directed from the brand imagery: warm ivory/bone, espresso
- * shadow, a deep rosewood-brick primary, clay + sage secondaries, brass hairline.
- * Single source of truth — consumed via Tailwind utilities (bg-canvas, text-ink…).
+ * Rosewood Living — design system v2
+ * Sharp editorial luxury. Near-zero radii, hairline rules, full-bleed imagery,
+ * couture typography. Palette: "Travertine & Ink" (warm stone + near-black ink
+ * + refined rosewood-sienna, with a champagne-bronze hairline accent).
  */
 @theme {
-  /* Neutrals — warm paper world */
-  --color-canvas: #f3ecdf;
-  --color-surface: #fbf6ec;
-  --color-surface-2: #ede3d2;
-  --color-ink: #241b14;
-  --color-ink-soft: #57473a;
-  --color-muted: #8b7a66;
-  --color-line: #e3d8c5;
-  --color-line-strong: #d6c8b1;
+  /* Neutrals — warm travertine + near-black ink */
+  --color-canvas: #ece6da;
+  --color-surface: #f4efe6;
+  --color-surface-2: #e2dacb;
+  --color-ink: #16120e;
+  --color-ink-soft: #4c4339;
+  --color-muted: #8a7f6f;
+  --color-line: #d3c9b8;
+  --color-line-strong: #c2b6a0;
 
-  /* Brand — rosewood + warm accents */
-  --color-rosewood: #7a4434;
-  --color-rosewood-deep: #4f2a20;
-  --color-rosewood-ink: #371d16;
-  --color-clay: #a9663f;
-  --color-sage: #5e6a4c;
-  --color-gold: #b08a52;
+  /* Brand */
+  --color-rosewood: #7a3f2e;
+  --color-rosewood-deep: #3a1e16;
+  --color-rosewood-ink: #1c140f; /* near-black warm — dark sections/footer */
+  --color-clay: #9b6242;
+  --color-gold: #9c7c4a; /* champagne-bronze accent for numerals / hairlines */
+  --color-sage: #55604a;
 
   /* Typography */
-  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
-  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Bodoni Moda Variable", "Times New Roman", Georgia, serif;
+  --font-sans: "Jost Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  /* Fluid type scale (clamp-based, mobile → desktop) */
-  --text-display: clamp(2.85rem, 6.5vw, 6rem);
-  --text-h1: clamp(2.25rem, 4.6vw, 3.85rem);
-  --text-h2: clamp(1.85rem, 3.2vw, 2.75rem);
-  --text-h3: clamp(1.3rem, 2vw, 1.7rem);
-  --text-lead: clamp(1.125rem, 1.55vw, 1.4rem);
+  /* Fluid type scale */
+  --text-display: clamp(2.9rem, 6.4vw, 5.8rem);
+  --text-h1: clamp(2.2rem, 4.8vw, 4rem);
+  --text-h2: clamp(1.8rem, 3.3vw, 2.85rem);
+  --text-h3: clamp(1.25rem, 1.9vw, 1.6rem);
+  --text-lead: clamp(1.05rem, 1.45vw, 1.3rem);
 
   /* Spacing rhythm — generous, editorial */
-  --spacing-section: clamp(5rem, 10vw, 9.5rem);
+  --spacing-section: clamp(5.5rem, 11vw, 11rem);
 
-  /* Soft, premium elevation (no harsh shadows) */
-  --shadow-card: 0 1px 2px rgba(36, 27, 20, 0.04),
-    0 18px 48px -22px rgba(36, 27, 20, 0.28);
-  --shadow-float: 0 2px 6px rgba(36, 27, 20, 0.06),
-    0 26px 60px -28px rgba(36, 27, 20, 0.4);
+  /* Restrained elevation */
+  --shadow-card: 0 1px 1px rgba(22, 18, 14, 0.03), 0 26px 60px -34px rgba(22, 18, 14, 0.35);
+  --shadow-float: 0 1px 1px rgba(22, 18, 14, 0.05), 0 40px 90px -45px rgba(22, 18, 14, 0.5);
 
-  --radius-lg: 0.9rem;
-  --radius-xl: 1.35rem;
-  --radius-2xl: 1.9rem;
-  --radius-3xl: 2.4rem;
+  /* Sharp radii (luxury = crisp corners) */
+  --radius-sm: 1px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
+  --radius-2xl: 3px;
+  --radius-3xl: 3px;
 
-  --container-content: 75rem;
+  --container-content: 78rem;
 
   --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -77,9 +76,10 @@
     background-color: var(--color-canvas);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-size: 1rem;
-    line-height: 1.65;
-    font-feature-settings: "ss01", "cv01";
+    font-size: 1.02rem;
+    font-weight: 350;
+    line-height: 1.7;
+    letter-spacing: 0.005em;
   }
 
   h1,
@@ -87,9 +87,9 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 420;
+    font-weight: 500;
     line-height: 1.04;
-    letter-spacing: -0.018em;
+    letter-spacing: -0.005em;
     color: var(--color-ink);
     font-optical-sizing: auto;
   }
@@ -99,92 +99,96 @@
     color: var(--color-surface);
   }
 
+  /* Crest light/dark swap — scoped to the nav so other placements are unaffected.
+     Top of page (transparent nav over hero) shows the ivory crest;
+     once scrolled or with the mobile menu open, the dark crest takes over. */
+  [data-nav] [data-crest="dark"] {
+    opacity: 0;
+  }
+  [data-nav].is-scrolled [data-crest="light"],
+  [data-nav].is-menu-open [data-crest="light"] {
+    opacity: 0;
+  }
+  [data-nav].is-scrolled [data-crest="dark"],
+  [data-nav].is-menu-open [data-crest="dark"] {
+    opacity: 1;
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-rosewood);
     outline-offset: 3px;
-    border-radius: 4px;
   }
 }
 
 @layer components {
-  /* Centered content rail */
   .u-container {
     width: 100%;
     max-width: var(--container-content);
     margin-inline: auto;
-    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
   }
 
-  /* Micro eyebrow label */
+  /* Eyebrow — uppercase, wide tracking, hairline lead */
   .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
-    font-size: 0.72rem;
+    gap: 0.7rem;
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.24em;
+    letter-spacing: 0.32em;
     color: var(--color-rosewood);
   }
   .eyebrow::before {
     content: "";
-    width: 1.6rem;
+    width: 2rem;
     height: 1px;
     background: currentColor;
-    opacity: 0.6;
+    opacity: 0.55;
   }
   .eyebrow--center::before {
     display: none;
   }
 
-  /* Buttons — pill, button-in-button trailing icon */
+  /* Buttons — rectangular, uppercase, tracked. No pills, no circle icons. */
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.7rem;
-    border-radius: 999px;
-    padding: 0.95rem 1.1rem 0.95rem 1.6rem;
-    font-size: 0.95rem;
+    gap: 0.8rem;
+    border-radius: 0;
+    padding: 1.05rem 1.9rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
     font-weight: 500;
-    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
     line-height: 1;
     cursor: pointer;
-    transition: transform 0.5s var(--ease-lux), background-color 0.5s var(--ease-lux),
-      color 0.5s var(--ease-lux), box-shadow 0.5s var(--ease-lux),
-      border-color 0.5s var(--ease-lux);
     border: 1px solid transparent;
-    will-change: transform;
-  }
-  .btn:active {
-    transform: scale(0.985);
+    transition: background-color 0.55s var(--ease-lux), color 0.55s var(--ease-lux),
+      border-color 0.55s var(--ease-lux);
   }
   .btn__icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 999px;
-    transition: transform 0.5s var(--ease-lux), background-color 0.5s var(--ease-lux);
+    transition: transform 0.55s var(--ease-lux);
   }
   .btn__icon svg {
-    width: 0.95rem;
-    height: 0.95rem;
+    width: 0.85rem;
+    height: 0.85rem;
   }
   .btn:hover .btn__icon {
-    transform: translate(2px, -1px);
+    transform: translateX(3px);
   }
 
   .btn-primary {
-    background: var(--color-rosewood);
-    color: #fbf6ec;
-    box-shadow: 0 14px 30px -16px rgba(79, 42, 32, 0.7);
-  }
-  .btn-primary .btn__icon {
-    background: rgba(251, 246, 236, 0.16);
+    background: var(--color-ink);
+    color: var(--color-canvas);
   }
   .btn-primary:hover {
-    background: var(--color-rosewood-deep);
+    background: var(--color-rosewood);
   }
 
   .btn-ghost {
@@ -192,65 +196,68 @@
     color: var(--color-ink);
     border-color: var(--color-line-strong);
   }
-  .btn-ghost .btn__icon {
-    background: rgba(36, 27, 20, 0.06);
-  }
   .btn-ghost:hover {
     border-color: var(--color-ink);
   }
 
   .btn-on-dark {
-    background: #fbf6ec;
-    color: var(--color-rosewood-ink);
-  }
-  .btn-on-dark .btn__icon {
-    background: rgba(55, 29, 22, 0.12);
+    background: var(--color-canvas);
+    color: var(--color-ink);
   }
   .btn-on-dark:hover {
     background: #fff;
   }
 
+  .btn-outline-light {
+    background: transparent;
+    color: #f4efe6;
+    border-color: rgba(244, 239, 230, 0.4);
+  }
+  .btn-outline-light:hover {
+    border-color: #f4efe6;
+    background: rgba(244, 239, 230, 0.08);
+  }
+
+  /* Text link — uppercase tracked, animated underline + arrow */
   .btn-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.55rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
     font-weight: 500;
-    color: var(--color-rosewood);
-    border-bottom: 1px solid transparent;
-    transition: gap 0.4s var(--ease-lux), border-color 0.4s var(--ease-lux);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: currentColor;
+    padding-bottom: 2px;
+    border-bottom: 1px solid currentColor;
+    transition: gap 0.45s var(--ease-lux), opacity 0.45s var(--ease-lux);
   }
   .btn-link svg {
-    width: 0.9rem;
-    height: 0.9rem;
-    transition: transform 0.4s var(--ease-lux);
+    width: 0.8rem;
+    height: 0.8rem;
+    transition: transform 0.45s var(--ease-lux);
   }
   .btn-link:hover {
-    gap: 0.75rem;
-    border-color: currentColor;
+    gap: 0.85rem;
   }
   .btn-link:hover svg {
-    transform: translateX(2px);
+    transform: translateX(3px);
   }
 
-  /* Hairline rule */
   .hr-line {
     height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent,
-      var(--color-line-strong),
-      transparent
-    );
+    background: var(--color-line-strong);
     border: 0;
   }
 }
 
-/* Scroll-reveal — GPU-only (opacity + transform), graceful + staggered */
+/* Scroll reveal — GPU-only, staggered */
 @layer utilities {
   [data-reveal] {
     opacity: 0;
-    transform: translateY(26px);
-    transition: opacity 0.95s var(--ease-lux), transform 0.95s var(--ease-lux);
+    transform: translateY(24px);
+    transition: opacity 1s var(--ease-lux), transform 1s var(--ease-lux);
     transition-delay: var(--reveal-delay, 0ms);
     will-change: opacity, transform;
   }
@@ -261,6 +268,40 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* Alternate palettes — set data-palette on <html> to switch.
+ * Default (no attribute) = "Travertine & Ink". */
+[data-palette="a"] {
+  /* A · Onyx & Champagne — dark, dramatic */
+  --color-canvas: #14120f;
+  --color-surface: #1c1915;
+  --color-surface-2: #221d18;
+  --color-ink: #f0e9da;
+  --color-ink-soft: #bcb1a0;
+  --color-muted: #8c8273;
+  --color-line: #322c24;
+  --color-line-strong: #443c31;
+  --color-rosewood: #c39a63;
+  --color-rosewood-deep: #e7d3ad;
+  --color-rosewood-ink: #0f0d0a;
+  --color-gold: #c9a978;
+}
+
+[data-palette="c"] {
+  /* C · Bordeaux Noir — warm classic */
+  --color-canvas: #f3eee4;
+  --color-surface: #f8f4ea;
+  --color-surface-2: #e9e0d0;
+  --color-ink: #241312;
+  --color-ink-soft: #5a423d;
+  --color-muted: #8a766f;
+  --color-line: #ddd0bf;
+  --color-line-strong: #cbbca6;
+  --color-rosewood: #6b2d2a;
+  --color-rosewood-deep: #3a1614;
+  --color-rosewood-ink: #1f1210;
+  --color-gold: #b0894f;
 }
 
 @media (prefers-reduced-motion: reduce) {

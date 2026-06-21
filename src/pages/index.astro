@@ -5,8 +5,8 @@ import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import EnquiryForm from "../components/forms/EnquiryForm.tsx";
 
-import heroImg from "../assets/images/hero.png";
-import planningImg from "../assets/images/planning-stage.png";
+import courtyardImg from "../assets/images/hero.png";
+import lanewayImg from "../assets/images/hero-laneway.png";
 import svcManagement from "../assets/images/service-management.png";
 import svcPlanning from "../assets/images/service-planning.png";
 import svcCommunity from "../assets/images/service-community.png";
@@ -85,59 +85,55 @@ const why = [
 
   <main>
     <!-- HERO -->
-    <section class="relative isolate flex min-h-[100dvh] flex-col justify-end overflow-hidden">
+    <section class="relative isolate flex min-h-[100dvh] items-center overflow-hidden">
       <div class="absolute inset-0 -z-10">
         <Image
-          src={heroImg}
+          src={lanewayImg}
           alt=""
-          widths={[768, 1280, 1920]}
+          widths={[1280, 1920, 2560, 3200]}
           sizes="100vw"
           loading="eager"
           fetchpriority="high"
           class="h-full w-full object-cover"
         />
-        <video
-          class="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          poster={heroImg.src}
-          aria-hidden="true"
-        >
-          <source src="/media/hero.mp4" type="video/mp4" />
-        </video>
+        <!-- vertical depth scrim -->
         <div
           class="absolute inset-0"
-          style="background: linear-gradient(180deg, rgba(36,27,20,0.34) 0%, rgba(36,27,20,0.05) 32%, rgba(36,27,20,0.45) 72%, rgba(36,27,20,0.78) 100%);"
+          style="background: linear-gradient(180deg, rgba(18,13,9,0.55) 0%, rgba(18,13,9,0.18) 28%, rgba(18,13,9,0.28) 60%, rgba(18,13,9,0.62) 100%);"
+        >
+        </div>
+        <!-- diagonal readability scrim behind the copy -->
+        <div
+          class="absolute inset-0"
+          style="background: linear-gradient(102deg, rgba(18,13,9,0.82) 0%, rgba(18,13,9,0.5) 26%, rgba(18,13,9,0.12) 52%, rgba(18,13,9,0) 72%);"
         >
         </div>
       </div>
 
-      <div class="u-container pb-[clamp(3.5rem,8vh,7rem)] pt-40">
+      <div class="u-container pt-20">
         <div class="max-w-3xl" data-reveal>
           <span
-            class="inline-flex items-center gap-2.5 text-[0.72rem] font-medium uppercase tracking-[0.24em]"
-            style="color:#e7d3ad"
+            class="inline-flex items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.3em]"
+            style="color:#f3ead9; text-shadow:0 1px 16px rgba(18,13,9,0.65)"
           >
-            <span class="inline-block h-px w-7" style="background:#e7d3ad;opacity:.7"></span>
+            <span class="inline-block h-px w-9" style="background:#cdaf7d"></span>
             Community &amp; Affordable Housing
           </span>
           <h1
-            class="mt-6 font-display text-display leading-[1.02]"
-            style="color:#fbf6ec; text-wrap:balance"
+            class="mt-8 text-display"
+            style="color:#f8f3ea; text-wrap:nowrap; line-height:0.98; text-shadow:0 2px 40px rgba(18,13,9,0.45)"
           >
-            The benchmark in community &amp; affordable housing.
+            <span class="block">The benchmark</span>
+            <span class="block">in housing.</span>
           </h1>
           <p
-            class="mt-6 max-w-xl text-lead"
-            style="color:rgba(251,246,236,0.86)"
+            class="mt-7 max-w-lg text-lead"
+            style="color:rgba(248,243,234,0.92); text-shadow:0 1px 20px rgba(18,13,9,0.5)"
           >
             We partner with property developers to unlock the advantages of affordable
             housing — and manage them, beautifully, for the long term.
           </p>
-          <div class="mt-9 flex flex-wrap items-center gap-3">
+          <div class="mt-10 flex flex-wrap items-center gap-3">
             <a href="/letter-of-intent" class="btn btn-on-dark">
               Ready for your project?
               <span class="btn__icon" aria-hidden="true">
@@ -146,13 +142,7 @@ const why = [
                 </svg>
               </span>
             </a>
-            <a
-              href="#approach"
-              class="btn"
-              style="color:#fbf6ec;border:1px solid rgba(251,246,236,0.35)"
-            >
-              Explore our approach
-            </a>
+            <a href="#approach" class="btn btn-outline-light">Explore our approach</a>
           </div>
         </div>
       </div>
@@ -161,10 +151,10 @@ const why = [
     <!-- POSITIONING / APPROACH -->
     <section id="approach" class="py-section">
       <div class="u-container">
-        <div class="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-end">
+        <div class="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-end">
           <div data-reveal>
             <span class="eyebrow">Our approach</span>
-            <h2 class="mt-5 text-h1" style="text-wrap:balance">
+            <h2 class="mt-6 text-h1" style="text-wrap:balance">
               We set the benchmark — then we hold it.
             </h2>
           </div>
@@ -176,12 +166,18 @@ const why = [
           </p>
         </div>
 
-        <div class="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-4" data-reveal>
+        <div class="mt-16 grid grid-cols-2 border-y border-line lg:grid-cols-4" data-reveal>
           {
-            proof.map((p) => (
-              <div class="bg-canvas p-7">
-                <div class="font-display text-[2.4rem] leading-none text-rosewood">{p.k}</div>
-                <p class="mt-3 text-[0.92rem] text-ink-soft">{p.v}</p>
+            proof.map((p, i) => (
+              <div
+                class:list={[
+                  "py-9 pr-7",
+                  i !== 0 && "lg:border-l lg:border-line lg:pl-9",
+                  i % 2 === 1 && "border-l border-line pl-7 lg:pl-9",
+                ]}
+              >
+                <div class="font-display text-[2.6rem] leading-none text-rosewood">{p.k}</div>
+                <p class="mt-4 text-[0.9rem] text-ink-soft">{p.v}</p>
               </div>
             ))
           }
@@ -194,49 +190,47 @@ const why = [
       <div class="u-container">
         <div class="max-w-2xl" data-reveal>
           <span class="eyebrow">What we do</span>
-          <h2 class="mt-5 text-h1">Three disciplines, one partner.</h2>
-          <p class="mt-5 text-ink-soft">
+          <h2 class="mt-6 text-h1">Three disciplines, one partner.</h2>
+          <p class="mt-6 text-ink-soft">
             From the first feasibility line to the thousandth day of management, your
             affordable housing is in one specialist set of hands.
           </p>
         </div>
 
-        <div class="mt-16 flex flex-col gap-16 lg:gap-24">
+        <div class="mt-20 flex flex-col gap-20 lg:gap-28">
           {
             services.map((s, i) => (
               <article
                 class:list={[
-                  "grid items-center gap-8 lg:grid-cols-2 lg:gap-16",
+                  "grid items-center gap-9 lg:grid-cols-2 lg:gap-16",
                   i % 2 === 1 && "lg:[&>figure]:order-2",
                 ]}
                 data-reveal
               >
-                <figure class="group overflow-hidden rounded-3xl border border-line bg-canvas p-2 shadow-card">
-                  <div class="overflow-hidden rounded-[1.7rem]">
-                    <Image
-                      src={s.image}
-                      alt={s.alt}
-                      widths={[480, 800, 1100]}
-                      sizes="(min-width: 1024px) 36rem, 92vw"
-                      class="aspect-[16/11] w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
-                    />
-                  </div>
+                <figure class="group overflow-hidden">
+                  <Image
+                    src={s.image}
+                    alt={s.alt}
+                    widths={[480, 800, 1100]}
+                    sizes="(min-width: 1024px) 36rem, 92vw"
+                    class="aspect-[16/11] w-full object-cover transition-transform duration-[1.4s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+                  />
                 </figure>
 
                 <div>
                   <div class="flex items-baseline gap-4">
-                    <span class="font-display text-[1.1rem] text-gold">{s.n}</span>
+                    <span class="font-display text-[1.15rem] text-gold">{s.n}</span>
                     <span class="hr-line flex-1"></span>
                   </div>
-                  <h3 class="mt-5 text-h2">{s.title}</h3>
-                  <p class="mt-4 text-ink-soft">{s.body}</p>
-                  <ul class="mt-6 grid gap-2.5 sm:grid-cols-2">
+                  <h3 class="mt-6 text-h2">{s.title}</h3>
+                  <p class="mt-5 text-ink-soft">{s.body}</p>
+                  <ul class="mt-7 grid gap-3 sm:grid-cols-2">
                     {s.points.map((pt) => (
-                      <li class="flex items-start gap-2.5 text-[0.95rem] text-ink-soft">
+                      <li class="flex items-start gap-2.5 text-[0.92rem] text-ink-soft">
                         <svg
-                          class="mt-[0.35rem] shrink-0 text-sage"
-                          width="14"
-                          height="14"
+                          class="mt-[0.4rem] shrink-0 text-rosewood"
+                          width="13"
+                          height="13"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
@@ -262,16 +256,16 @@ const why = [
         <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div data-reveal>
             <span class="eyebrow">Planning advisory</span>
-            <h2 class="mt-5 text-h1" style="text-wrap:balance">
+            <h2 class="mt-6 text-h1" style="text-wrap:balance">
               Still in the planning stage?
             </h2>
-            <p class="mt-5 text-ink-soft">
+            <p class="mt-6 text-ink-soft">
               Whether you have a site under contract or you&rsquo;re simply exploring the
               upside, the earlier we&rsquo;re involved, the more we can unlock. We&rsquo;ll
               show you where the affordable-housing uplift fits — often around an additional
               30% — and how to design a scheme that captures it.
             </p>
-            <ul class="mt-7 space-y-3">
+            <ul class="mt-8 space-y-3.5">
               {
                 [
                   "A clear read on your site's affordable-housing potential",
@@ -295,21 +289,21 @@ const why = [
                 ))
               }
             </ul>
-            <div class="mt-8 overflow-hidden rounded-3xl border border-line bg-surface p-2 shadow-card">
+            <div class="mt-9 overflow-hidden border border-line">
               <Image
-                src={planningImg}
-                alt="Sunlit landscaped laneway between a premium low-rise residential community at golden hour"
+                src={courtyardImg}
+                alt="Premium low-rise residential courtyard with landscaped gardens at golden hour"
                 widths={[480, 800, 1100]}
                 sizes="(min-width: 1024px) 34rem, 92vw"
-                class="aspect-[16/10] w-full rounded-[1.7rem] object-cover"
+                class="aspect-[16/10] w-full object-cover"
               />
             </div>
           </div>
 
           <div data-reveal style="--reveal-delay:120ms">
-            <div class="rounded-3xl border border-line bg-surface p-7 shadow-card sm:p-9">
+            <div class="rounded-[2px] border border-line bg-surface p-7 sm:p-9">
               <h3 class="text-h3">Tell us about your project</h3>
-              <p class="mt-2 mb-6 text-[0.95rem] text-ink-soft">
+              <p class="mt-3 mb-7 text-[0.95rem] text-ink-soft">
                 A short note is all we need to point you in the right direction. No
                 obligation.
               </p>
@@ -325,23 +319,15 @@ const why = [
       <div class="u-container">
         <div class="max-w-2xl" data-reveal>
           <span class="eyebrow">Why Rosewood</span>
-          <h2 class="mt-5 text-h1">Why developers choose us.</h2>
+          <h2 class="mt-6 text-h1">Why developers choose us.</h2>
         </div>
-        <div class="mt-14 grid gap-5 sm:grid-cols-2">
+        <div class="mt-16 grid gap-x-12 gap-y-12 sm:grid-cols-2">
           {
             why.map((w, i) => (
-              <div
-                class="rounded-3xl border border-line bg-canvas p-8 transition-shadow duration-500 hover:shadow-card"
-                data-reveal
-                style={`--reveal-delay:${i * 90}ms`}
-              >
-                <div class="mb-4 h-9 w-9 rounded-full" style="background:rgba(122,68,52,0.1)">
-                  <div class="grid h-full w-full place-items-center font-display text-rosewood">
-                    {String(i + 1)}
-                  </div>
-                </div>
-                <h3 class="text-h3">{w.title}</h3>
-                <p class="mt-3 text-[0.96rem] text-ink-soft">{w.body}</p>
+              <div class="border-t border-line-strong pt-7" data-reveal style={`--reveal-delay:${(i % 2) * 90}ms`}>
+                <span class="font-display text-[1.1rem] text-gold">0{i + 1}</span>
+                <h3 class="mt-4 text-h3">{w.title}</h3>
+                <p class="mt-4 text-[0.96rem] text-ink-soft">{w.body}</p>
               </div>
             ))
           }
@@ -350,23 +336,20 @@ const why = [
     </section>
 
     <!-- CLOSING CTA -->
-    <section class="py-section" style="background:var(--color-rosewood-ink); color:#fbf6ec">
+    <section class="py-section" style="background:var(--color-rosewood-ink); color:#f6f1e7">
       <div class="u-container">
         <div class="mx-auto max-w-3xl text-center" data-reveal>
-          <span
-            class="eyebrow eyebrow--center"
-            style="color:#e7d3ad; justify-content:center"
-          >
+          <span class="eyebrow eyebrow--center" style="color:#e4cfa6; justify-content:center">
             Ready when you are
           </span>
-          <h2 class="mt-5 font-display text-display" style="color:#fbf6ec; text-wrap:balance">
+          <h2 class="mt-6 text-display" style="color:#f6f1e7; text-wrap:balance">
             Ready for your project?
           </h2>
-          <p class="mx-auto mt-6 max-w-xl text-lead" style="color:rgba(251,246,236,0.82)">
+          <p class="mx-auto mt-7 max-w-xl text-lead" style="color:rgba(246,241,231,0.8)">
             Request a personalised Letter of Intent and start building with the full
             advantages of affordable housing behind you.
           </p>
-          <div class="mt-9 flex justify-center">
+          <div class="mt-10 flex justify-center">
             <a href="/letter-of-intent" class="btn btn-on-dark">
               Get your Letter of Intent
               <span class="btn__icon" aria-hidden="true">
