@@ -1,0 +1,2 @@
+# Vendored third-party Agent Skills (reinstall via: npx skills add <repo>)
+.cursor/skills/

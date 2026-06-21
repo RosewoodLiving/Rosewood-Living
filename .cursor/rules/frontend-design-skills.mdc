@@ -1,0 +1,34 @@
+---
+description: Routes frontend/UI work to the installed anti-slop design skills
+globs: **/*.tsx,**/*.jsx,**/*.ts,**/*.js,**/*.vue,**/*.svelte,**/*.astro,**/*.html,**/*.css,**/*.scss
+alwaysApply: false
+---
+
+# Frontend Design Skills Router
+
+When building, styling, or editing user-facing UI (landing pages, marketing
+sections, portfolios, hero/layout/typography/motion work), **invoke a design
+skill from `.cursor/skills/` instead of producing generic, templated output.**
+
+## Which skill to use
+
+- **Default (general UI):** use `design-taste-frontend` for anti-slop layout,
+  typography, spacing, and motion.
+- **Premium / calm / "expensive" feel:** use `high-end-visual-design`.
+- **Improving an existing page/component:** use `redesign-existing-projects`
+  (audit the current UI first, then fix).
+- **Reference images / comps before coding:** use `imagegen-frontend-web` or
+  `imagegen-frontend-mobile`.
+- **Brand identity boards:** use `brandkit`.
+
+Other opt-in aesthetics (`minimalist-ui`, `industrial-brutalist-ui`,
+`gpt-taste`, `stitch-design-taste`) only when the user names that direction.
+
+## How to apply
+
+1. Read the relevant `SKILL.md` fully before writing UI code.
+2. Follow its pre-flight / brief-inference steps — do not jump to a default look.
+3. If the user explicitly names a skill, that choice overrides this default.
+
+This rule is a pointer only; the `SKILL.md` files remain the source of truth.
+Do not duplicate skill content here.
