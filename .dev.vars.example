@@ -1,0 +1,14 @@
+# Copy this file to `.dev.vars` and fill in real values for local development.
+# `.dev.vars` is gitignored. In production, set these in the Cloudflare Pages
+# dashboard under Settings > Environment variables (mark secrets as encrypted).
+
+# Supabase (Project Settings > API)
+SUPABASE_URL="https://your-project.supabase.co"
+SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
+
+# Resend (https://resend.com/api-keys)
+RESEND_API_KEY="re_xxxxxxxx"
+
+# Cloudflare Turnstile (https://dash.cloudflare.com -> Turnstile)
+TURNSTILE_SECRET_KEY="0x_xxxxxxxx"
+PUBLIC_TURNSTILE_SITE_KEY="0x_xxxxxxxx"

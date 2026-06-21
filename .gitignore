@@ -1,2 +1,24 @@
 # Vendored third-party Agent Skills (reinstall via: npx skills add <repo>)
 .cursor/skills/
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Cloudflare / Wrangler
+.wrangler/
+
+# Local environment secrets
+.dev.vars
+.env
+.env.*
+!.dev.vars.example
+
+# Logs / OS
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db

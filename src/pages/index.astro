@@ -1,0 +1,42 @@
+---
+import Base from "../layouts/Base.astro";
+
+const stack = [
+  "Astro",
+  "React islands",
+  "Tailwind v4",
+  "Cloudflare Workers",
+  "Supabase",
+  "Resend",
+];
+---
+
+<Base title="Rosewood Living — Affordable & Community Housing Advisory">
+  <main class="min-h-screen flex items-center justify-center px-6 py-section">
+    <div class="w-full max-w-content text-center">
+      <p class="text-sm uppercase tracking-[0.25em] text-muted mb-6">
+        Foundation ready
+      </p>
+
+      <h1 class="font-display text-display text-ink mb-6">Rosewood Living</h1>
+
+      <p class="font-sans text-lead text-ink-soft max-w-2xl mx-auto">
+        Affordable and community housing management and advisory for property
+        developers. The stack is wired up &mdash; design system, pages, and the
+        enquiry pipeline come next.
+      </p>
+
+      <div
+        class="mt-12 inline-flex flex-wrap items-center justify-center gap-3 text-sm text-muted"
+      >
+        {
+          stack.map((item) => (
+            <span class="rounded-full border border-line bg-surface px-4 py-2">
+              {item}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </main>
+</Base>

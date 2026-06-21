@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "rosewood-living",
+  "compatibility_date": "2026-06-21",
+  "compatibility_flags": ["nodejs_compat"],
+  // The Astro Cloudflare adapter auto-provisions the ASSETS (static files)
+  // and SESSION (KV) bindings on deploy. Add bindings (KV, R2, vars) here.
+  // Non-sensitive vars can go under "vars"; secrets are set via:
+  //   npx wrangler secret put <KEY>
+  "observability": {
+    "enabled": true
+  }
+}

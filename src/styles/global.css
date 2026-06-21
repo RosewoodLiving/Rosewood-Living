@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/* Self-hosted variable fonts (swap freely once brand direction is locked). */
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/inter";
+
+/*
+ * Rosewood Living — design tokens
+ * Warm, editorial, premium. Tuned for a B2B housing-advisory brand.
+ * These are the single source of truth; pages/components consume them via
+ * Tailwind utilities (bg-canvas, text-ink, font-display, etc.).
+ */
+@theme {
+  /* Palette — warm rosewood + ivory, with a muted sage accent */
+  --color-canvas: #f7f2ea;
+  --color-surface: #fffdf9;
+  --color-ink: #2b1d16;
+  --color-ink-soft: #5c4a3f;
+  --color-muted: #8a7a6d;
+  --color-line: #e6dccd;
+
+  --color-rosewood: #6b3a2e;
+  --color-rosewood-deep: #4a2620;
+  --color-clay: #b06a4f;
+  --color-sage: #6f7a5a;
+  --color-gold: #b8915a;
+
+  /* Typography */
+  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Fluid type scale (clamp-based, mobile -> desktop) */
+  --text-display: clamp(2.75rem, 6vw, 5.5rem);
+  --text-h1: clamp(2.25rem, 4.5vw, 3.75rem);
+  --text-h2: clamp(1.75rem, 3vw, 2.5rem);
+  --text-h3: clamp(1.35rem, 2vw, 1.75rem);
+  --text-lead: clamp(1.125rem, 1.6vw, 1.375rem);
+
+  /* Spacing rhythm for generous, editorial sections */
+  --spacing-section: clamp(4rem, 9vw, 8rem);
+
+  /* Soft, premium elevation (no harsh shadows) */
+  --shadow-card: 0 1px 2px rgba(43, 29, 22, 0.04),
+    0 12px 32px -12px rgba(43, 29, 22, 0.18);
+
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+
+  /* Container width -> generates `max-w-content` */
+  --container-content: 72rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 460;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+  }
+
+  ::selection {
+    background-color: var(--color-rosewood);
+    color: var(--color-surface);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
