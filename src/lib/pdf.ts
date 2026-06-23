@@ -187,7 +187,7 @@ export async function generateLoiPdf(
     color: LINE,
   });
   page.drawText(
-    "Rosewood Living  ·  238 Victoria Rd, Gladesville NSW 2111  ·  info@rosewoodliving.com.au  ·  ABN 00 000 000 000",
+    "Rosewood Living  ·  238 Victoria Rd, Gladesville NSW 2111  ·  info@rosewoodliving.com.au  ·  ABN 11 142 441 549",
     { x: MARGIN, y: MARGIN + 8, size: 8, font: sans, color: INK_SOFT },
   );
 

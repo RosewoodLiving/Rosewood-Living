@@ -21,41 +21,44 @@ const proof = [
 const services = [
   {
     n: "01",
-    title: "Tailored Management Services",
-    image: svcManagement,
-    alt: "Refined, professionally managed residential lobby and resident lounge",
-    body: "End-to-end management of the affordable and community component — built around residents and the long-term performance of your asset.",
-    points: [
-      "Tenant selection, sustainment & community wellbeing",
-      "Building management & maintenance",
-      "Access control & security",
-      "Fire & regulatory compliance",
-    ],
-  },
-  {
-    n: "02",
     title: "Planning & Development",
+    tagline: "Feasibility through to approval.",
     image: svcPlanning,
     alt: "Architect's table with a scale model of a residential development and material samples",
-    body: "Advisory from feasibility through approval — structuring the affordable housing offer so it strengthens both the scheme and the numbers.",
+    body: "Upfront advisory to de-risk your DA and structure your affordable housing offer so it strengthens both the project design and the financial returns.",
     points: [
-      "Feasibility & affordable-housing strategy",
-      "Scheme optimisation for the uplift",
-      "Planning pathway & SEPP guidance",
+      "Feasibility analysis & strategic positioning",
+      "Scheme optimisation for FSR / density bonuses",
+      "NSW planning pathway & SEPP guidance",
       "Stakeholder & authority engagement",
     ],
   },
   {
-    n: "03",
+    n: "02",
     title: "Community Housing Advisory",
+    tagline: "Compliance, framework & registration.",
     image: svcCommunity,
     alt: "Rooftop communal garden terrace of a residential community at golden hour",
-    body: "Specialist counsel on community and affordable housing — from eligibility and compliance to designing places people are proud to call home.",
+    body: "Specialist counsel to navigate the complex regulatory landscape, ensuring your project seamlessly aligns with NSW community housing frameworks.",
     points: [
-      "Affordable & community housing eligibility",
-      "Compliance & registration support",
-      "Resident & community outcomes",
-      "Ongoing reporting & assurance",
+      "Affordable & community housing eligibility matching",
+      "Compliance framework & registration support",
+      "Resident outcome strategies",
+      "Ongoing reporting & statutory assurance",
+    ],
+  },
+  {
+    n: "03",
+    title: "Tailored Property Management",
+    tagline: "Asset protection & community operations.",
+    image: svcManagement,
+    alt: "Refined, professionally managed residential lobby and resident lounge",
+    body: "End-to-end operational management of the affordable component, built around asset performance, risk mitigation, and community stability.",
+    points: [
+      "Targeted tenant selection & community wellbeing",
+      "Building management, proactive maintenance & security",
+      "Access control & programmatic leasing",
+      "Fire, safety & regulatory compliance",
     ],
   },
 ];
@@ -66,8 +69,8 @@ const why = [
     body: "Community and affordable housing is all we do — so the advice you get is sharper, and the management is built for it.",
   },
   {
-    title: "Aligned for the long term",
-    body: "A ~15-year management horizon means our interests sit with the lasting performance of your asset and its residents.",
+    title: "Securing your asset for the mandatory 15 years",
+    body: "With NSW density bonuses tied to a 15-year affordable housing requirement, long-term asset protection is critical. We ensure your property remains fully compliant, high-performing, and seamlessly managed from year one to year fifteen.",
   },
   {
     title: "Advisory & management, together",
@@ -130,8 +133,8 @@ const why = [
             class="mt-7 max-w-lg text-lead"
             style="color:rgba(248,243,234,0.92); text-shadow:0 1px 20px rgba(18,13,9,0.5)"
           >
-            We partner with property developers to unlock the advantages of affordable
-            housing — and manage them, beautifully, for the long term.
+            A specialist partner for property developers: unlocking the strategic
+            advantages of affordable housing, and managing the compliance, for the long term.
           </p>
           <div class="mt-10 flex flex-wrap items-center gap-3">
             <a href="/letter-of-intent" class="btn btn-on-dark">
@@ -155,15 +158,22 @@ const why = [
           <div data-reveal>
             <span class="eyebrow">Our approach</span>
             <h2 class="mt-6 text-h1" style="text-wrap:balance">
-              We set the benchmark — then we hold it.
+              Protecting your yield. Elevating your asset.
             </h2>
           </div>
-          <p class="text-ink-soft lg:pb-2" data-reveal style="--reveal-delay:120ms">
-            Affordable housing is no longer a constraint to design around — it is an
-            advantage to design <em>with</em>. Rosewood Living helps developers turn the
-            affordable component into additional yield, a smoother planning path, and an
-            asset that performs for decades.
-          </p>
+          <div class="space-y-5 text-ink-soft lg:pb-2" data-reveal style="--reveal-delay:120ms">
+            <p>
+              We believe affordable housing shouldn&rsquo;t be a constraint to design
+              around — it is a strategic advantage to leverage.
+            </p>
+            <p>
+              Rosewood Living is a market-driven CHP built to support your project&rsquo;s
+              financial viability. As a private sector provider with a commercial approach,
+              our success is directly aligned with yours. We partner with you to navigate
+              NSW compliance, secure DA advantages, and deliver a seamless management model
+              that respects your vision and secures your returns for decades.
+            </p>
+          </div>
         </div>
 
         <div class="mt-16 grid grid-cols-2 border-y border-line lg:grid-cols-4" data-reveal>
@@ -189,12 +199,10 @@ const why = [
     <section id="services" class="py-section" style="background:var(--color-surface-2)">
       <div class="u-container">
         <div class="max-w-2xl" data-reveal>
-          <span class="eyebrow">What we do</span>
-          <h2 class="mt-6 text-h1">Three disciplines, one partner.</h2>
-          <p class="mt-6 text-ink-soft">
-            From the first feasibility line to the thousandth day of management, your
-            affordable housing is in one specialist set of hands.
-          </p>
+          <span class="eyebrow">Our services</span>
+          <h2 class="mt-6 text-h1" style="text-wrap:balance">
+            From feasibility to long-term operations.
+          </h2>
         </div>
 
         <div class="mt-20 flex flex-col gap-20 lg:gap-28">
@@ -223,7 +231,8 @@ const why = [
                     <span class="hr-line flex-1"></span>
                   </div>
                   <h3 class="mt-6 text-h2">{s.title}</h3>
-                  <p class="mt-5 text-ink-soft">{s.body}</p>
+                  <p class="mt-3 font-display text-[1.15rem] italic text-rosewood">{s.tagline}</p>
+                  <p class="mt-4 text-ink-soft">{s.body}</p>
                   <ul class="mt-7 grid gap-3 sm:grid-cols-2">
                     {s.points.map((pt) => (
                       <li class="flex items-start gap-2.5 text-[0.92rem] text-ink-soft">
@@ -246,6 +255,98 @@ const why = [
               </article>
             ))
           }
+        </div>
+      </div>
+    </section>
+
+    <!-- BOARDING HOUSES / YIELD STRATEGY -->
+    <section id="boarding-houses" class="py-section" style="background:var(--color-rosewood-ink); color:#ece3d4;">
+      <div class="u-container">
+        <div class="grid gap-12 lg:grid-cols-2 lg:items-start lg:gap-16">
+          <div data-reveal>
+            <span class="eyebrow" style="color:#e4cfa6">Boarding houses &amp; yield</span>
+            <h2 class="mt-6 text-h1" style="color:#f6f1e7; text-wrap:balance">
+              Maximising yield within the caps.
+            </h2>
+            <div class="mt-7 space-y-5" style="color:rgba(236,227,212,0.8)">
+              <p>
+                We specialise in the end-to-end management of registered boarding houses —
+                keeping your asset fully eligible for land-tax exemptions under Revenue NSW
+                guidelines. Resident agreements are managed meticulously to stay within the
+                mandated single and double tariff caps, for both full and partial board.
+              </p>
+              <p>
+                To protect your margins under these price ceilings, we integrate smart
+                utility management — including embedded energy networks and optional on-site
+                battery solutions. By bulk-purchasing electricity and data at wholesale rates
+                and packaging them into residents&rsquo; board, we lower building overheads,
+                keep resident costs within land-tax thresholds, and capture additional net
+                yield.
+              </p>
+            </div>
+          </div>
+
+          <div data-reveal style="--reveal-delay:120ms">
+            <div
+              class="rounded-[2px] border p-7 sm:p-9"
+              style="border-color:rgba(236,227,212,0.18)"
+            >
+              <h3
+                class="text-xs font-medium uppercase tracking-[0.22em]"
+                style="color:#e4cfa6"
+              >
+                Revenue NSW maximum weekly tariffs &mdash; 2026
+              </h3>
+              <table class="mt-7 w-full border-collapse text-left">
+                <thead>
+                  <tr style="color:rgba(236,227,212,0.55)">
+                    <th class="pb-3 text-[0.78rem] font-medium">Accommodation type</th>
+                    <th class="pb-3 text-right text-[0.78rem] font-medium">Single</th>
+                    <th class="pb-3 text-right text-[0.78rem] font-medium">Shared / double</th>
+                  </tr>
+                </thead>
+                <tbody style="color:#f6f1e7">
+                  <tr style="border-top:1px solid rgba(236,227,212,0.16)">
+                    <td class="py-4 pr-4 text-[0.95rem]">
+                      Less than full board
+                      <span class="block text-[0.78rem]" style="color:rgba(236,227,212,0.5)">
+                        Room &amp; utilities only
+                      </span>
+                    </td>
+                    <td class="py-4 text-right font-display text-[1.3rem] text-gold">
+                      $325<span class="text-[0.72rem]">/wk</span>
+                    </td>
+                    <td class="py-4 text-right font-display text-[1.3rem] text-gold">
+                      $534<span class="text-[0.72rem]">/wk</span>
+                    </td>
+                  </tr>
+                  <tr style="border-top:1px solid rgba(236,227,212,0.16)">
+                    <td class="py-4 pr-4 text-[0.95rem]">
+                      Full board &amp; lodging
+                      <span class="block text-[0.78rem]" style="color:rgba(236,227,212,0.5)">
+                        Includes meals
+                      </span>
+                    </td>
+                    <td class="py-4 text-right font-display text-[1.3rem] text-gold">
+                      $482<span class="text-[0.72rem]">/wk</span>
+                    </td>
+                    <td class="py-4 text-right font-display text-[1.3rem] text-gold">
+                      $794<span class="text-[0.72rem]">/wk</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p
+                class="mt-7 text-[0.72rem] leading-relaxed"
+                style="color:rgba(236,227,212,0.45)"
+              >
+                Indicative maximum weekly tariffs per Revenue NSW for the 2026 land-tax year
+                (Section 10Q, Land Tax Management Act 1956). Figures are subject to annual
+                Revenue NSW determination &mdash; verify current thresholds before relying on
+                them.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
