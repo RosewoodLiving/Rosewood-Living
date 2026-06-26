@@ -31,6 +31,24 @@ export const POST: APIRoute = async ({ request }) => {
   }
   const d = parsed.data;
 
+  // Convert optional digit-strings to numbers for the dedicated integer columns.
+  const num = (v: string | undefined): number | null =>
+    v && v.length ? Number(v) : null;
+
+  // Structured per-type breakdown (only the fields the developer actually filled in)
+  // — used to enrich the team notification email.
+  const breakdown: [string, string][] = (
+    [
+      ["Total apartments / units", d.totalApartments],
+      ["Affordable housing apartments", d.affordableApartments],
+      ["Boarding rooms", d.boardingRooms],
+      ["Co-living rooms", d.coLivingRooms],
+      ["Serviced apartments", d.servicedApartments],
+      ["Retail floor area (m²)", d.retailAreaSqm],
+      ["Commercial floor area (m²)", d.commercialAreaSqm],
+    ] as [string, string | undefined][]
+  ).filter((entry): entry is [string, string] => Boolean(entry[1]));
+
   await storeLead(env, {
     lead_type: "letter_of_intent",
     name: d.fullName,
@@ -39,9 +57,16 @@ export const POST: APIRoute = async ({ request }) => {
     email: d.email,
     phone: d.phone,
     project_location: d.projectLocation,
-    project_type: d.projectType,
-    dwellings: d.dwellings ?? null,
+    development_types: d.developmentTypes,
+    dwellings: d.dwellings,
     project_stage: d.projectStage,
+    total_apartments: num(d.totalApartments),
+    affordable_apartments: num(d.affordableApartments),
+    boarding_rooms: num(d.boardingRooms),
+    co_living_rooms: num(d.coLivingRooms),
+    serviced_apartments: num(d.servicedApartments),
+    retail_area_sqm: num(d.retailAreaSqm),
+    commercial_area_sqm: num(d.commercialAreaSqm),
     message: d.message ?? null,
     source: "loi_form",
   });
@@ -85,8 +110,15 @@ export const POST: APIRoute = async ({ request }) => {
       "New Letter of Intent issued",
       `<p><strong>${esc(d.fullName)}</strong>, ${esc(d.role)} — ${esc(d.company)}</p>
        <p>Email: ${esc(d.email)}<br/>Phone: ${esc(d.phone)}</p>
-       <p>Location: ${esc(d.projectLocation)}<br/>Type: ${esc(d.projectType)}<br/>
-        Dwellings: ${esc(d.dwellings ?? "—")}<br/>Stage: ${esc(d.projectStage)}</p>
+       <p>Address: ${esc(d.projectLocation)}<br/>Development type(s): ${esc(d.developmentTypes)}<br/>
+        Total dwellings: ${esc(d.dwellings)}<br/>Stage: ${esc(d.projectStage)}</p>
+       ${
+         breakdown.length
+           ? `<p><strong>Breakdown</strong><br/>${breakdown
+               .map(([k, v]) => `${esc(k)}: ${esc(v)}`)
+               .join("<br/>")}</p>`
+           : ""
+       }
        <p style="white-space:pre-wrap">${esc(d.message ?? "—")}</p>`,
     ),
   });

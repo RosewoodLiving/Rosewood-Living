@@ -7,20 +7,28 @@
 -- Supabase CLI (`supabase db push`).
 
 create table if not exists public.leads (
-  id               uuid primary key default gen_random_uuid(),
-  created_at       timestamptz not null default now(),
-  lead_type        text not null check (lead_type in ('general_enquiry', 'letter_of_intent')),
-  name             text not null,
-  company          text not null,
-  role             text,
-  email            text not null,
-  phone            text,
-  project_location text,
-  project_type     text,
-  dwellings        text,
-  project_stage    text,
-  message          text,
-  source           text not null default 'website'
+  id                    uuid primary key default gen_random_uuid(),
+  created_at            timestamptz not null default now(),
+  lead_type             text not null check (lead_type in ('general_enquiry', 'letter_of_intent')),
+  name                  text not null,
+  company               text not null,
+  role                  text,
+  email                 text not null,
+  phone                 text,
+  project_location      text,
+  development_types     text,
+  dwellings             text,
+  project_stage         text,
+  -- Structured project breakdown (Letter of Intent only)
+  total_apartments      integer,
+  affordable_apartments integer,
+  boarding_rooms        integer,
+  co_living_rooms       integer,
+  serviced_apartments   integer,
+  retail_area_sqm       integer,
+  commercial_area_sqm   integer,
+  message               text,
+  source                text not null default 'website'
 );
 
 create index if not exists leads_created_at_idx on public.leads (created_at desc);

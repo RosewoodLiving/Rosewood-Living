@@ -1,6 +1,7 @@
 import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from "pdf-lib";
 import type { LoiInput } from "./schemas";
 import { CREST_PNG_BASE64, CREST_PNG_WIDTH, CREST_PNG_HEIGHT } from "./crest-logo";
+import { SIGNATURE_PNG_BASE64, SIGNATURE_PNG_WIDTH, SIGNATURE_PNG_HEIGHT } from "./signature";
 
 const ROSEWOOD = rgb(0.478, 0.267, 0.204); // #7a4434
 const INK = rgb(0.141, 0.106, 0.078); // #241b14
@@ -22,6 +23,28 @@ function base64ToUint8(b64: string): Uint8Array {
 
 function formatDate(d: Date): string {
   return d.toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric" });
+}
+
+/** Best-effort suburb extraction from a free-text address (token before the state). */
+function parseSuburb(address: string): string | null {
+  const match = address.match(
+    /,\s*([A-Za-z .'\-]+?)\s+(?:NSW|New South Wales|ACT|VIC|QLD|SA|WA|TAS|NT)\b/i,
+  );
+  const suburb = match?.[1]?.trim();
+  return suburb && suburb.length >= 2 ? suburb : null;
+}
+
+/** A noun describing the affordable housing, chosen from the selected development type(s). */
+function dwellingNoun(developmentTypes: string): string {
+  const types = developmentTypes
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (types.some((t) => t === "Apartments / Units" || t === "Mixed use")) return "apartments";
+  if (types.includes("Boarding house")) return "boarding rooms";
+  if (types.includes("Co-living housing")) return "co-living rooms";
+  if (types.includes("Serviced apartments")) return "serviced apartments";
+  return "dwellings";
 }
 
 /** Reference like RL-20260621-AVE */
@@ -61,6 +84,53 @@ function drawParagraph(
     page.drawText(line, { x: MARGIN, y: cursor.y, size, font, color });
     cursor.y -= lineHeight;
   }
+  cursor.y -= opts.gapAfter ?? 0;
+}
+
+/** Word-wrapped paragraph that can switch fonts/colour per segment (e.g. a bold address). */
+function drawRichText(
+  page: PDFPage,
+  segments: { text: string; bold?: boolean }[],
+  opts: {
+    font: PDFFont;
+    bold: PDFFont;
+    size: number;
+    lineHeight?: number;
+    color?: ReturnType<typeof rgb>;
+    boldColor?: ReturnType<typeof rgb>;
+    gapAfter?: number;
+  },
+  cursor: Cursor,
+) {
+  const lineHeight = opts.lineHeight ?? opts.size * 1.5;
+  const baseColor = opts.color ?? INK_SOFT;
+  const boldColor = opts.boldColor ?? INK;
+  const spaceW = opts.font.widthOfTextAtSize(" ", opts.size);
+
+  const tokens: { text: string; font: PDFFont; color: ReturnType<typeof rgb> }[] = [];
+  for (const seg of segments) {
+    const font = seg.bold ? opts.bold : opts.font;
+    const color = seg.bold ? boldColor : baseColor;
+    for (const word of seg.text.split(/\s+/)) {
+      if (word.length) tokens.push({ text: word, font, color });
+    }
+  }
+
+  let x = MARGIN;
+  let atLineStart = true;
+  for (const t of tokens) {
+    const w = t.font.widthOfTextAtSize(t.text, opts.size);
+    if (!atLineStart && x + spaceW + w > MARGIN + MAX_W) {
+      cursor.y -= lineHeight;
+      x = MARGIN;
+      atLineStart = true;
+    }
+    if (!atLineStart) x += spaceW;
+    page.drawText(t.text, { x, y: cursor.y, size: opts.size, font: t.font, color: t.color });
+    x += w;
+    atLineStart = false;
+  }
+  cursor.y -= lineHeight;
   cursor.y -= opts.gapAfter ?? 0;
 }
 
@@ -133,7 +203,7 @@ export async function generateLoiPdf(
   cursor.y -= 28;
 
   // Recipient block
-  for (const [i, lineText] of [data.fullName, data.role, data.company, data.projectLocation].entries()) {
+  for (const [i, lineText] of [data.fullName, data.role, data.company].entries()) {
     page.drawText(lineText, {
       x: MARGIN,
       y: cursor.y,
@@ -145,39 +215,68 @@ export async function generateLoiPdf(
   }
   cursor.y -= 16;
 
-  // Subject
-  const subject = `Re: Letter of Intent — Affordable Housing Management for ${data.projectLocation}`;
+  // Subject / title
+  const noun = dwellingNoun(data.developmentTypes);
+  // Title-case the noun so it matches the capitalisation of the rest of the heading.
+  const nounTitle = noun
+    .split(" ")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+  const subject = `Letter of Intent — Submission for Affordable Housing Uplift & Management of Affordable Housing ${nounTitle} at ${data.projectLocation}`;
   drawParagraph(page, subject, serifBold, 12, cursor, { lineHeight: 17, color: INK, gapAfter: 14 });
 
-  // Salutation + body (placeholder clauses — replace with approved wording before go-live)
-  const dwellingClause = data.dwellings
-    ? `the proposed development of approximately ${data.dwellings} dwellings`
-    : "the proposed development";
+  // Body — modelled on the approved Rosewood Living letter wording.
+  const suburb = parseSuburb(data.projectLocation);
+  const locationSuffix = suburb ? ` based in ${suburb}, New South Wales` : " in New South Wales";
 
-  const paragraphs = [
-    `Dear ${data.fullName},`,
-    `Rosewood Living is pleased to confirm its intent to partner with ${data.company} on ${dwellingClause} at ${data.projectLocation}. This letter records our in-principle commitment to act as your community and affordable housing partner for the project.`,
-    `Subject to contract and the relevant planning approvals, Rosewood Living intends to manage the affordable housing component of the development as a registered Tier 3 Community Housing Provider, for a period of approximately fifteen (15) years from the issue of the Occupation Certificate, in accordance with applicable NSW affordable housing and community housing requirements.`,
-    `On this basis, the project may be positioned to access the planning advantages available to developments that deliver affordable housing, including the additional floor space available under the relevant State Environmental Planning Policy. Our advisory team will work alongside yours to optimise the scheme and the affordable housing outcome.`,
-    `This letter is an expression of intent only. It is not legally binding, does not create an obligation on either party to proceed, and is provided to support your planning and feasibility process. Final terms will be set out in a separate management and advisory agreement.`,
-    `We would welcome the opportunity to progress this with you.`,
+  // Salutation
+  drawParagraph(page, `Dear ${data.fullName},`, serif, 10.5, cursor, {
+    lineHeight: 15.5,
+    color: INK,
+    gapAfter: 10,
+  });
+
+  // First paragraph keeps the project address in bold for emphasis.
+  drawRichText(
+    page,
+    [
+      {
+        text: "We write to submit this Letter of Intent confirming our proposal to manage the affordable housing component within the proposed development at ",
+      },
+      { text: data.projectLocation, bold: true },
+      {
+        text: ` on behalf of ${data.company}. Rosewood Living confirms its intention to manage the affordable housing ${noun} for a minimum period of fifteen (15) years. This management period will commence from the date of issue of the Occupation Certificate.`,
+      },
+    ],
+    { font: serif, bold: serifBold, size: 10.5, lineHeight: 15.5, color: INK_SOFT, boldColor: INK, gapAfter: 10 },
+    cursor,
+  );
+
+  const remaining = [
+    `Rosewood Living is a registered Tier 3 Community Housing Provider, and ${data.company} is a leading developer${locationSuffix}.`,
+    `We confirm that all affordable housing dwellings within the development will be managed in accordance with the NSW Affordable Housing Guidelines and any conditions of consent issued by the Department of Planning, Housing and Infrastructure. This agreement will come into effect upon handover of the affordable housing ${noun} following the issue of the Occupation Certificate.`,
+    `We trust this Letter of Intent satisfies the requirements of the Development Application documentation. Should you require any further information or clarification, please do not hesitate to contact us.`,
   ];
 
-  for (const [i, p] of paragraphs.entries()) {
-    drawParagraph(page, p, serif, 10.5, cursor, {
-      lineHeight: 15.5,
-      color: i === 0 ? INK : INK_SOFT,
-      gapAfter: 10,
-    });
+  for (const p of remaining) {
+    drawParagraph(page, p, serif, 10.5, cursor, { lineHeight: 15.5, color: INK_SOFT, gapAfter: 10 });
   }
 
-  // Signature block
+  // Signature block — Leon's embedded signature above the name + title.
   cursor.y -= 8;
   page.drawText("Yours sincerely,", { x: MARGIN, y: cursor.y, size: 10.5, font: serif, color: INK_SOFT });
-  cursor.y -= 40;
-  page.drawText("Rosewood Living", { x: MARGIN, y: cursor.y, size: 12, font: serifBold, color: INK });
+  cursor.y -= 8;
+
+  const signature = await doc.embedPng(base64ToUint8(SIGNATURE_PNG_BASE64));
+  const sigW = 150;
+  const sigH = sigW * (SIGNATURE_PNG_HEIGHT / SIGNATURE_PNG_WIDTH);
+  page.drawImage(signature, { x: MARGIN, y: cursor.y - sigH, width: sigW, height: sigH });
+  // Clear the full signature height plus breathing room so the name never overlaps the ink.
+  cursor.y -= sigH + 22;
+
+  page.drawText("(Leon) See Chan", { x: MARGIN, y: cursor.y, size: 12, font: serifBold, color: INK });
   cursor.y -= 15;
-  page.drawText("Licensee-in-Charge", { x: MARGIN, y: cursor.y, size: 9.5, font: sans, color: INK_SOFT });
+  page.drawText("Licensee in Charge", { x: MARGIN, y: cursor.y, size: 9.5, font: sans, color: INK_SOFT });
 
   // Footer
   page.drawLine({

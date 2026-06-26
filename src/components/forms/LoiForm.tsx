@@ -1,7 +1,56 @@
-import { useState } from "react";
-import { Field, Input, Textarea, Select, Consent, SubmitButton, ErrorNote } from "./fields";
+import { useMemo, useState } from "react";
+import {
+  Field,
+  Input,
+  Textarea,
+  Select,
+  MultiSelect,
+  Consent,
+  SubmitButton,
+  ErrorNote,
+} from "./fields";
 
 type Status = "idle" | "submitting" | "success" | "error";
+
+const DEVELOPMENT_TYPES = [
+  "Mixed use",
+  "Apartments / Units",
+  "Boarding house",
+  "Co-living housing",
+  "Serviced apartments",
+  "Villas",
+  "Townhouses",
+  "Manor houses",
+  "Duplexes",
+  "Houses",
+];
+
+/** Which breakdown fields each development type reveals. */
+const TYPE_FIELD_MAP: Record<string, string[]> = {
+  "Mixed use": [
+    "retailAreaSqm",
+    "commercialAreaSqm",
+    "totalApartments",
+    "affordableApartments",
+    "coLivingRooms",
+    "boardingRooms",
+  ],
+  "Apartments / Units": ["totalApartments", "affordableApartments", "boardingRooms", "coLivingRooms"],
+  "Boarding house": ["boardingRooms"],
+  "Co-living housing": ["coLivingRooms"],
+  "Serviced apartments": ["servicedApartments"],
+};
+
+/** Canonical render order + labels for the breakdown inputs. */
+const BREAKDOWN_FIELDS: { name: string; label: string; hint?: string }[] = [
+  { name: "retailAreaSqm", label: "Retail area (m²)" },
+  { name: "commercialAreaSqm", label: "Commercial area (m²)" },
+  { name: "totalApartments", label: "Total apartments" },
+  { name: "affordableApartments", label: "Affordable apartments" },
+  { name: "boardingRooms", label: "Boarding rooms" },
+  { name: "coLivingRooms", label: "Co-living rooms" },
+  { name: "servicedApartments", label: "Serviced apartments" },
+];
 
 function downloadPdf(base64: string, fileName: string) {
   const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
@@ -19,12 +68,26 @@ function downloadPdf(base64: string, fileName: string) {
 export default function LoiForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const [types, setTypes] = useState<string[]>([]);
+
+  // Union of breakdown fields revealed by the selected types, in canonical order.
+  const visibleFields = useMemo(() => {
+    const keys = new Set<string>();
+    for (const t of types) for (const k of TYPE_FIELD_MAP[t] ?? []) keys.add(k);
+    return BREAKDOWN_FIELDS.filter((f) => keys.has(f.name));
+  }, [types]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
     const form = event.currentTarget;
     const payload = Object.fromEntries(new FormData(form).entries());
+
+    if (types.length === 0) {
+      setError("Please pick at least one type of development.");
+      setStatus("error");
+      return;
+    }
 
     if (!payload.consent) {
       setError("Please confirm consent so we can issue your letter.");
@@ -49,6 +112,7 @@ export default function LoiForm() {
       if (json.pdfBase64) downloadPdf(json.pdfBase64, json.fileName || "Rosewood-Living-Letter-of-Intent.pdf");
       setStatus("success");
       form.reset();
+      setTypes([]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
       setStatus("error");
@@ -90,22 +154,32 @@ export default function LoiForm() {
         <Field label="Phone" htmlFor="l-phone" required>
           <Input id="l-phone" name="phone" type="tel" autoComplete="tel" required placeholder="+61…" />
         </Field>
-        <Field label="Project location" htmlFor="l-location" required>
-          <Input id="l-location" name="projectLocation" required placeholder="Suburb, NSW" />
+        <Field label="Project site address" htmlFor="l-location" required className="sm:col-span-2">
+          <Input
+            id="l-location"
+            name="projectLocation"
+            autoComplete="street-address"
+            required
+            placeholder="12 Smith St, Eastwood NSW 2122"
+          />
         </Field>
-        <Field label="Approx. dwellings" htmlFor="l-dwellings" hint="optional">
-          <Input id="l-dwellings" name="dwellings" type="number" min={0} placeholder="e.g. 80" />
+        <Field
+          label="Pick all the types of dwellings in your development"
+          htmlFor="l-types"
+          required
+          hint="select one or more"
+          className="sm:col-span-2"
+        >
+          <MultiSelect
+            options={DEVELOPMENT_TYPES}
+            value={types}
+            onChange={setTypes}
+            placeholder="Select development type(s)…"
+          />
+          <input type="hidden" name="developmentTypes" value={types.join(",")} />
         </Field>
-        <Field label="Project type" htmlFor="l-type" required>
-          <Select id="l-type" name="projectType" defaultValue="" required>
-            <option value="" disabled>Select a type…</option>
-            <option>Build-to-sell apartments</option>
-            <option>Build-to-rent</option>
-            <option>Mixed-use</option>
-            <option>Townhouses / low-rise</option>
-            <option>Master-planned community</option>
-            <option>Other</option>
-          </Select>
+        <Field label="Total number of dwellings" htmlFor="l-dwellings" required>
+          <Input id="l-dwellings" name="dwellings" type="number" min={0} required placeholder="e.g. 80" />
         </Field>
         <Field label="Project stage" htmlFor="l-stage" required>
           <Select id="l-stage" name="projectStage" defaultValue="" required>
@@ -116,15 +190,25 @@ export default function LoiForm() {
             <option>Under construction</option>
           </Select>
         </Field>
+
+        {visibleFields.length > 0 && (
+          <div className="sm:col-span-2 grid gap-4 sm:grid-cols-2">
+            {visibleFields.map((f) => (
+              <Field key={f.name} label={f.label} htmlFor={`l-${f.name}`} hint={f.hint}>
+                <Input id={`l-${f.name}`} name={f.name} type="number" min={0} placeholder="0" />
+              </Field>
+            ))}
+          </div>
+        )}
       </div>
-      <Field label="Anything we should know?" htmlFor="l-message" hint="optional">
+      <Field label="Anything we should know?" htmlFor="l-message">
         <Textarea id="l-message" name="message" rows={3} placeholder="Site context, timing, or specific questions." />
       </Field>
       <Consent id="l-consent" />
       <ErrorNote message={error} />
       <SubmitButton busy={status === "submitting"}>Generate my Letter of Intent</SubmitButton>
       <p className="text-center text-[0.78rem] text-muted">
-        Instant PDF download &middot; emailed copy &middot; no obligation
+        Instant PDF download &middot; Emailed copy &middot; No obligation
       </p>
     </form>
   );

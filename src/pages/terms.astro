@@ -1,0 +1,177 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+const updated = "27 June 2026";
+---
+
+<Base
+  title="Terms of Use — Rosewood Living"
+  description="The terms governing your use of the Rosewood Living website and the Letter of Intent it generates."
+>
+  <Nav />
+
+  <main>
+    <!-- HEADER -->
+    <section class="border-b border-line bg-surface">
+      <div class="u-container pb-[clamp(2.5rem,5vw,4rem)] pt-36">
+        <span class="eyebrow">Legal</span>
+        <h1 class="mt-6 text-h1 font-display" style="font-weight:500">Terms of Use</h1>
+        <p class="mt-4 text-[0.9rem] uppercase tracking-[0.16em] text-muted">
+          Last updated {updated}
+        </p>
+      </div>
+    </section>
+
+    <!-- BODY -->
+    <section class="py-[clamp(3rem,6vw,5rem)]">
+      <div class="u-container">
+        <article class="legal max-w-3xl">
+          <p>
+            These Terms of Use (&ldquo;Terms&rdquo;) govern your access to and use of the Rosewood
+            Living website (the &ldquo;Site&rdquo;) and any materials it generates, including the
+            Letter of Intent. By using the Site, you agree to these Terms. If you do not agree,
+            please do not use the Site.
+          </p>
+
+          <h2>1. About us</h2>
+          <p>
+            The Site is operated by Rosewood Living (ABN 11 142 441 549), a community and affordable
+            housing management and advisory provider based in New South Wales, Australia.
+          </p>
+
+          <h2>2. The Letter of Intent</h2>
+          <p>
+            The Letter of Intent generated through the Site is provided as a non-binding expression
+            of intent to support your planning and feasibility process. It is not a contract, offer,
+            or guarantee, and does not create any legal or financial obligation on Rosewood Living or
+            on you. Any engagement to provide services will be set out in a separate written
+            agreement.
+          </p>
+          <p>
+            You are responsible for ensuring the information you submit is accurate and complete. The
+            generated document reflects the details you provide and should be reviewed before it is
+            relied upon or included in any development application.
+          </p>
+
+          <h2>3. No professional advice</h2>
+          <p>
+            The content on the Site and within the Letter of Intent is general in nature and does not
+            constitute legal, financial, planning or investment advice. You should obtain your own
+            independent professional advice before making decisions about your project.
+          </p>
+
+          <h2>4. Acceptable use</h2>
+          <p>You agree not to:</p>
+          <ul>
+            <li>use the Site for any unlawful purpose or in breach of these Terms;</li>
+            <li>submit false, misleading or fraudulent information;</li>
+            <li>interfere with or attempt to gain unauthorised access to the Site, its systems or data; or</li>
+            <li>copy, reproduce or exploit any part of the Site for commercial purposes without our consent.</li>
+          </ul>
+
+          <h2>5. Intellectual property</h2>
+          <p>
+            All content on the Site — including text, branding, logos, design and the Rosewood Living
+            name — is owned by or licensed to us and is protected by intellectual property laws. You
+            may use the Letter of Intent we generate for you for its intended purpose, but you may not
+            otherwise reproduce or distribute our content without permission.
+          </p>
+
+          <h2>6. Availability</h2>
+          <p>
+            We aim to keep the Site available and accurate but provide it on an &ldquo;as is&rdquo; and
+            &ldquo;as available&rdquo; basis. We do not warrant that the Site will be uninterrupted,
+            error-free, or that any defects will be corrected.
+          </p>
+
+          <h2>7. Limitation of liability</h2>
+          <p>
+            To the maximum extent permitted by law, Rosewood Living is not liable for any loss or
+            damage arising from your use of, or reliance on, the Site or the Letter of Intent. Nothing
+            in these Terms excludes any rights or guarantees you have under the Australian Consumer Law
+            that cannot lawfully be excluded.
+          </p>
+
+          <h2>8. Privacy</h2>
+          <p>
+            Your use of the Site is also governed by our
+            <a href="/privacy">Privacy Policy</a>, which explains how we handle your personal
+            information.
+          </p>
+
+          <h2>9. Changes to these Terms</h2>
+          <p>
+            We may update these Terms from time to time. The current version will always be available
+            on this page, with the &ldquo;last updated&rdquo; date revised accordingly. Continued use
+            of the Site after changes are posted constitutes acceptance of the updated Terms.
+          </p>
+
+          <h2>10. Governing law</h2>
+          <p>
+            These Terms are governed by the laws of New South Wales, Australia, and you submit to the
+            non-exclusive jurisdiction of the courts of that State.
+          </p>
+
+          <h2>11. Contact us</h2>
+          <p>
+            <strong>Rosewood Living</strong><br />
+            238 Victoria Rd, Gladesville NSW 2111, Australia<br />
+            Email: <a href="mailto:info@rosewoodliving.com.au">info@rosewoodliving.com.au</a><br />
+            ABN 11 142 441 549
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .legal {
+    color: var(--color-ink-soft);
+    font-size: 1rem;
+  }
+  .legal > p:first-child {
+    font-size: 1.08rem;
+    color: var(--color-ink);
+  }
+  .legal h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-h3);
+    color: var(--color-ink);
+    margin-top: 2.75rem;
+    margin-bottom: 0.85rem;
+  }
+  .legal p {
+    margin-bottom: 1rem;
+    line-height: 1.78;
+  }
+  .legal ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.15rem;
+    list-style: disc;
+  }
+  .legal li {
+    margin-bottom: 0.55rem;
+    line-height: 1.7;
+  }
+  .legal a {
+    color: var(--color-rosewood);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .legal a:hover {
+    color: var(--color-rosewood-deep);
+  }
+  .legal strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .legal em {
+    font-style: italic;
+  }
+</style>

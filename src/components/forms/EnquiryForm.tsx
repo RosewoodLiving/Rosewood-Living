@@ -65,10 +65,10 @@ export default function EnquiryForm() {
         <Field label="Email" htmlFor="g-email" required>
           <Input id="g-email" name="email" type="email" autoComplete="email" required placeholder="you@company.com.au" />
         </Field>
-        <Field label="Phone" htmlFor="g-phone" hint="optional">
+        <Field label="Phone" htmlFor="g-phone">
           <Input id="g-phone" name="phone" type="tel" autoComplete="tel" placeholder="+61…" />
         </Field>
-        <Field label="Project stage" htmlFor="g-stage" hint="optional" className="sm:col-span-2">
+        <Field label="Project stage" htmlFor="g-stage" className="sm:col-span-2">
           <Select id="g-stage" name="projectStage" defaultValue="">
             <option value="" disabled>Select a stage…</option>
             <option>Just exploring</option>

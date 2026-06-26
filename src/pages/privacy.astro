@@ -1,0 +1,189 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+const updated = "27 June 2026";
+---
+
+<Base
+  title="Privacy Policy — Rosewood Living"
+  description="How Rosewood Living collects, uses, stores and protects the personal information you share with us, in line with the Australian Privacy Principles."
+>
+  <Nav />
+
+  <main>
+    <!-- HEADER -->
+    <section class="border-b border-line bg-surface">
+      <div class="u-container pb-[clamp(2.5rem,5vw,4rem)] pt-36">
+        <span class="eyebrow">Legal</span>
+        <h1 class="mt-6 text-h1 font-display" style="font-weight:500">Privacy Policy</h1>
+        <p class="mt-4 text-[0.9rem] uppercase tracking-[0.16em] text-muted">
+          Last updated {updated}
+        </p>
+      </div>
+    </section>
+
+    <!-- BODY -->
+    <section class="py-[clamp(3rem,6vw,5rem)]">
+      <div class="u-container">
+        <article class="legal max-w-3xl">
+          <p>
+            Rosewood Living (&ldquo;Rosewood Living&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo; or
+            &ldquo;our&rdquo;) is committed to protecting your privacy. This policy explains how we
+            collect, use, disclose and safeguard your personal information when you visit our
+            website or engage our services, and how we comply with the
+            <em>Privacy Act 1988</em> (Cth) and the Australian Privacy Principles (APPs).
+          </p>
+          <p>
+            By using this website or submitting an enquiry or Letter of Intent request, you
+            consent to the collection and use of your information as described below.
+          </p>
+
+          <h2>1. Information we collect</h2>
+          <p>We only collect information that is reasonably necessary for our functions and activities, including:</p>
+          <ul>
+            <li><strong>Contact details</strong> — your name, role, company, email address and phone number.</li>
+            <li>
+              <strong>Project details</strong> — information you provide about a development site,
+              such as the project address, development type, dwelling numbers and related figures.
+            </li>
+            <li><strong>Correspondence</strong> — any messages, enquiries or documents you send us.</li>
+            <li>
+              <strong>Technical data</strong> — limited information your browser shares automatically,
+              such as your IP address, device and general usage, used to keep the site secure and reliable.
+            </li>
+          </ul>
+
+          <h2>2. How we use your information</h2>
+          <p>We use the information we collect to:</p>
+          <ul>
+            <li>respond to your enquiries and prepare and issue your Letter of Intent;</li>
+            <li>provide our advisory and management services and communicate with you about them;</li>
+            <li>maintain our records and meet our regulatory and reporting obligations as a community housing provider; and</li>
+            <li>improve, secure and operate our website.</li>
+          </ul>
+          <p>
+            We will not use your information for an unrelated purpose without your consent, unless
+            permitted or required by law.
+          </p>
+
+          <h2>3. Disclosure of your information</h2>
+          <p>
+            We do not sell your personal information. We may disclose it to trusted service
+            providers who help us operate our business — for example, secure cloud hosting,
+            database and email delivery providers — and only so they can perform services on our
+            behalf. We may also disclose information where required or authorised by law, or to
+            protect our legal rights.
+          </p>
+
+          <h2>4. Storage and security</h2>
+          <p>
+            Your information is stored on reputable third-party platforms that may process or store
+            data in Australia or overseas. We take reasonable steps to protect your information from
+            misuse, loss and unauthorised access, including access controls and encrypted
+            connections. No method of transmission over the internet is completely secure, and we
+            cannot guarantee absolute security.
+          </p>
+
+          <h2>5. Retention</h2>
+          <p>
+            We keep personal information only for as long as it is needed for the purposes described
+            in this policy, or as required to meet our legal and regulatory obligations, after which
+            we take reasonable steps to delete or de-identify it.
+          </p>
+
+          <h2>6. Your rights</h2>
+          <p>
+            You may request access to the personal information we hold about you, and ask us to
+            correct it if it is inaccurate, out of date or incomplete. To make a request, or if you
+            have a privacy concern, contact us using the details below. We will respond within a
+            reasonable period. If you are not satisfied with our response, you may contact the
+            Office of the Australian Information Commissioner (OAIC) at
+            <a href="https://www.oaic.gov.au" target="_blank" rel="noopener">oaic.gov.au</a>.
+          </p>
+
+          <h2>7. Cookies and analytics</h2>
+          <p>
+            Our website uses minimal cookies and similar technologies that are necessary for the
+            site to function and to understand general usage. You can control or disable cookies
+            through your browser settings; some features may not work as intended if you do.
+          </p>
+
+          <h2>8. Third-party links</h2>
+          <p>
+            Our website may contain links to external sites that we do not operate. We are not
+            responsible for the privacy practices of those sites and encourage you to review their
+            policies.
+          </p>
+
+          <h2>9. Changes to this policy</h2>
+          <p>
+            We may update this Privacy Policy from time to time. The current version will always be
+            available on this page, with the &ldquo;last updated&rdquo; date revised accordingly.
+          </p>
+
+          <h2>10. Contact us</h2>
+          <p>
+            For any privacy questions or requests, please contact:
+          </p>
+          <p>
+            <strong>Rosewood Living</strong><br />
+            238 Victoria Rd, Gladesville NSW 2111, Australia<br />
+            Email: <a href="mailto:info@rosewoodliving.com.au">info@rosewoodliving.com.au</a><br />
+            ABN 11 142 441 549
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .legal {
+    color: var(--color-ink-soft);
+    font-size: 1rem;
+  }
+  .legal > p:first-child {
+    font-size: 1.08rem;
+    color: var(--color-ink);
+  }
+  .legal h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-h3);
+    color: var(--color-ink);
+    margin-top: 2.75rem;
+    margin-bottom: 0.85rem;
+  }
+  .legal p {
+    margin-bottom: 1rem;
+    line-height: 1.78;
+  }
+  .legal ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.15rem;
+    list-style: disc;
+  }
+  .legal li {
+    margin-bottom: 0.55rem;
+    line-height: 1.7;
+  }
+  .legal a {
+    color: var(--color-rosewood);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .legal a:hover {
+    color: var(--color-rosewood-deep);
+  }
+  .legal strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .legal em {
+    font-style: italic;
+  }
+</style>

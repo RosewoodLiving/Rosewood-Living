@@ -4,15 +4,24 @@ export interface LeadRow {
   lead_type: "general_enquiry" | "letter_of_intent";
   name: string;
   company: string;
-  role: string | null;
   email: string;
-  phone: string | null;
-  project_location: string | null;
-  project_type: string | null;
-  dwellings: string | null;
-  project_stage: string | null;
-  message: string | null;
   source: string;
+  role?: string | null;
+  phone?: string | null;
+  project_location?: string | null;
+  /** Comma-joined list of selected development types (LOI only). */
+  development_types?: string | null;
+  dwellings?: string | null;
+  project_stage?: string | null;
+  // Structured project breakdown (LOI only) — whole numbers, null when not provided.
+  total_apartments?: number | null;
+  affordable_apartments?: number | null;
+  boarding_rooms?: number | null;
+  co_living_rooms?: number | null;
+  serviced_apartments?: number | null;
+  retail_area_sqm?: number | null;
+  commercial_area_sqm?: number | null;
+  message?: string | null;
 }
 
 /**
