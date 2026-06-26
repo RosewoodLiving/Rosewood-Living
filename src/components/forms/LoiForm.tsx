@@ -167,7 +167,6 @@ export default function LoiForm() {
           label="Pick all the types of dwellings in your development"
           htmlFor="l-types"
           required
-          hint="select one or more"
           className="sm:col-span-2"
         >
           <MultiSelect
