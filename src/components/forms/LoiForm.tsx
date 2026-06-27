@@ -163,6 +163,15 @@ export default function LoiForm() {
             placeholder="12 Smith St, Eastwood NSW 2122"
           />
         </Field>
+        <Field label="Project stage" htmlFor="l-stage" required>
+          <Select id="l-stage" name="projectStage" defaultValue="" required>
+            <option value="" disabled>Select a stage…</option>
+            <option>Feasibility / concept</option>
+            <option>Planning / DA</option>
+            <option>Approved / pre-construction</option>
+            <option>Under construction</option>
+          </Select>
+        </Field>
         <Field
           label="Pick all the types of dwellings in your development"
           htmlFor="l-types"
@@ -179,15 +188,6 @@ export default function LoiForm() {
         </Field>
         <Field label="Total number of dwellings" htmlFor="l-dwellings" required>
           <Input id="l-dwellings" name="dwellings" type="number" min={0} required placeholder="e.g. 80" />
-        </Field>
-        <Field label="Project stage" htmlFor="l-stage" required>
-          <Select id="l-stage" name="projectStage" defaultValue="" required>
-            <option value="" disabled>Select a stage…</option>
-            <option>Feasibility / concept</option>
-            <option>Planning / DA</option>
-            <option>Approved / pre-construction</option>
-            <option>Under construction</option>
-          </Select>
         </Field>
 
         {visibleFields.length > 0 && (
